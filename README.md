@@ -1,0 +1,2 @@
+# educational_administration_management
+graduation project
