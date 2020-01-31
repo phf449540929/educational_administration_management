@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>教师主页</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div th:object="${session.teacher}" style="height: 600px">
+
+    <p th:text="您好，教师： + *{teacherName}"></p>
+
+    <style type="text/css">
+        table{
+            border-collapse: collapse;
+            text-align: center;
+        }
+        td{
+            border: solid 1px;
+        }
+    </style>
+
+    <table>
+        <caption th:text="教师信息"></caption>
+        <tr>
+            <td th:text="教职工号"></td>
+            <td th:text="*{teacherId}"></td>
+        </tr>
+        <tr>
+            <td th:text="密码"></td>
+            <td th:text="*{teacherPassword}"></td>
+        </tr>
+        <tr>
+            <td th:text="名字"></td>
+            <td th:text="*{teacherName}"></td>
+        </tr>
+        <tr>
+            <td th:text="性别"></td>
+            <td th:text="*{teacherGender}"></td>
+        </tr>
+        <tr>
+            <td th:text="部门"></td>
+            <td th:text="${teacherDepartmentName}"></td>
+        </tr>
+        <tr>
+            <td th:text="职称"></td>
+            <td th:if="${session.teacher.teacherRank eq session.ASSISTANT}" th:text="助教"></td>
+            <td th:if="${session.teacher.teacherRank eq session.LECTURER}" th:text="讲师"></td>
+            <td th:if="${session.teacher.teacherRank eq session.ASSOCIATE_PROFESSOR}" th:text="副教授"></td>
+            <td th:if="${session.teacher.teacherRank eq session.PROFESSOR}" th:text="教授"></td>
+        </tr>
+    </table>
+
+    <br>
+    <form th:action="@{course/professional/set.do}" th:method="get">
+        <input th:type="submit" th:value="选择专业课" title="选择专业课"/>
+    </form>
+    <br>
+    <form th:action="@{course/public/set.do}" th:method="get">
+        <input th:type="submit" th:value="选择公共课" title="选择公共课"/>
+    </form>
+    <br>
+    <form th:action="@{course/elective/school/set.do}" th:method="get">
+        <input th:type="submit" th:value="选择全校性选修课" title="选择全校性选修课"/>
+    </form>
+    <br>
+    <form th:action="@{course/elective/sports/set.do}" th:method="get">
+        <input th:type="submit" th:value="选择体育选修课" title="选择体育选修课"/>
+    </form>
+    <br>
+    <form th:action="@{/}" th:method="get">
+        <input th:type="submit" th:value="登出" title="登出"/>
+    </form>
+
+</div>
+
+</body>
+</html>

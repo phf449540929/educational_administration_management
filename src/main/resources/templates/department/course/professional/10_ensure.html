@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>确认课程设置</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div style="height: 600px">
+    <p th:text="请确认您设置的课程信息："></p>
+
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        td {
+            border: solid 1px;
+        }
+    </style>
+
+    <table>
+        <caption th:text="课程信息"></caption>
+        <tr>
+            <td th:text="开课学院编号"></td>
+            <td th:text="${session.department.departmentId}"></td>
+        </tr>
+        <tr>
+            <td th:text="开课学院名称"></td>
+            <td th:text="${session.department.departmentName}"></td>
+        </tr>
+        <tr>
+            <td th:text="开课年份"></td>
+            <td th:text="${session.year}"></td>
+        </tr>
+        <tr>
+            <td th:text="开课学期"></td>
+            <td th:text="${session.semester eq session.LAST_HALF_SEMESTER ? '上半学期' : '下半学期'}"></td>
+        </tr>
+        <tr>
+            <td th:text="课程类型"></td>
+            <td>
+                <a th:if="${session.type eq session.PROFESSIONAL_COURSE}" th:text="专业课"></a>
+                <a th:if="${session.type eq session.PUBLIC_COURSE}" th:text="公共课"></a>
+                <a th:if="${session.type eq session.SCHOOL_ELECTIVE_COURSE}" th:text="全校性选修课"></a>
+                <a th:if="${session.type eq session.SPORTS_ELECTIVE_COURSE}" th:text="体育选修课"></a>
+            </td>
+        </tr>
+        <tr>
+            <td th:text="课程周期"></td>
+            <td th:text="${'第' + session.beginWeek.toString().substring(5) + '周至第' + session.endWeek.toString().substring(5) + '周'}"></td>
+        </tr>
+        <tr>
+            <td th:text="课程日期"></td>
+            <td th:switch="${session.day}">
+                <a th:case="${session.DAY_1}" th:text="星期一"></a>
+                <a th:case="${session.DAY_2}" th:text="星期二"></a>
+                <a th:case="${session.DAY_3}" th:text="星期三"></a>
+                <a th:case="${session.DAY_4}" th:text="星期四"></a>
+                <a th:case="${session.DAY_5}" th:text="星期五"></a>
+                <a th:case="${session.DAY_6}" th:text="星期六"></a>
+                <a th:case="${session.DAY_7}" th:text="星期日"></a>
+            </td>
+        </tr>
+        <tr>
+            <td th:text="课程时间"></td>
+            <td th:text="${'第' + session.beginOrder.toString().split('_')[1] + '至' + session.endOrder.toString().split('_')[1] + '节课'}"></td>
+        </tr>
+        <tr>
+            <td th:text="课程名字"></td>
+            <td th:text="${session.name}"></td>
+        </tr>
+        <tr>
+            <td th:text="课程教室"></td>
+            <td th:text="${session.classroom.toString().substring(10)}"></td>
+        </tr>
+        <!--<tr>
+            <td th:text="教师所需职称"></td>
+            <td>
+                <a th:if="${session.rank eq session.ASSISTANT}" th:text="助教"></a>
+                <a th:if="${session.rank eq session.LECTURER}" th:text="讲师"></a>
+                <a th:if="${session.rank eq session.ASSOCIATE_PROFESSOR}" th:text="副教授"></a>
+                <a th:if="${session.rank eq session.PROFESSOR}" th:text="教授"></a>
+            </td>
+        </tr>-->
+        <tr>
+            <td th:text="上课班级数"></td>
+            <td th:text="${classNumber}">
+            </td>
+        </tr>
+        <tr>
+            <td th:text="上课班级"></td>
+            <td>
+                <ul th:each="class, classStat : ${session.classArray}">
+                    <li th:text="${class}"></li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td th:text="上课总人数"></td>
+            <td th:text="${studentNumber}">
+            </td>
+        </tr>
+    </table>
+
+    <br>
+    <form th:action="@{ensure.do}" th:method="post">
+        <input th:type="submit" th:value="确认" title="确认">
+    </form>
+</div>
+
+</body>
+</html>

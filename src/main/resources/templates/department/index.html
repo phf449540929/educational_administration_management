@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>部门主页</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div th:object="${session.department}" style="height: 600px">
+
+    <p th:text="您好，部门： + *{departmentName}"></p>
+
+    <style type="text/css">
+        table{
+            border-collapse: collapse;
+            text-align: center;
+        }
+        td{
+            border: solid 1px;
+        }
+    </style>
+
+    <table>
+        <caption th:text="部门信息"></caption>
+        <tr>
+            <td th:text="部门号"></td>
+            <td th:text="*{departmentId}"></td>
+        </tr>
+        <tr>
+            <td th:text="密码"></td>
+            <td th:text="*{departmentPassword}"></td>
+        </tr>
+        <tr>
+            <td th:text="名称"></td>
+            <td th:text="*{departmentName}"></td>
+        </tr>
+    </table>
+
+    <br>
+    <form th:action="@{course/professional/set.do}" th:method="get">
+        <input th:type="submit" th:value="开设专业课" title="开设专业课"/>
+    </form>
+    <br>
+    <form th:action="@{course/public/set.do}" th:method="get">
+        <input th:type="submit" th:value="开设公共课" title="开设公共课"/>
+    </form>
+    <br>
+    <form th:action="@{course/elective/school/set.do}" th:method="get">
+        <input th:type="submit" th:value="开设全校性选修课" title="开设全校性选修课"/>
+    </form>
+    <br>
+    <form th:action="@{course/elective/sports/set.do}" th:method="get">
+        <input th:type="submit" th:value="开设体育选修课" title="开设体育选修课"/>
+    </form>
+
+</div>
+
+</body>
+</html>

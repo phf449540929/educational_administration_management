@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>选择开课学期</title>
+</head>
+<body>
+
+<p th:text="您已设置了该公共课的开课年份为："></p>
+<p th:text="${session.year} + '年'"></p>
+
+<form th:action="@{semester.do}" th:method="post">
+    <p th:text="请选择该公共课的开课学期"></p>
+    <ul style="display: inline-block">
+        <li>
+            <input th:type="radio" th:name="semester" th:value="${session.LAST_HALF_SEMESTER}" th:text="上半学期" title="学期">
+        </li>
+        <li>
+            <input th:type="radio" th:name="semester" th:value="${session.NEXT_HALF_SEMESTER}" th:text="下半学期" title="学期">
+        </li>
+    </ul>
+
+    <br><br>
+    <input type="submit">
+</form>
+
+</body>
+</html>

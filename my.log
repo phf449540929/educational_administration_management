@@ -1,0 +1,7 @@
+INFO 2018-09-29 15:13:26,486 [thread] c.c.edu.Application.logStarting 50 :Starting Application on USER-20180221AI with PID 13964 (started by haifeng in E:\IntelliJ IDEA\educational_administration_management)
+INFO 2018-09-29 15:13:26,488 [thread] c.c.edu.Application.logStartupProfileInfo 680 :No active profile set, falling back to default profiles: default
+WARN 2018-09-29 15:13:27,533 [thread] i.u.websockets.jsr.handleDeployment 67 :UT026009: XNIO worker was not set on WebSocketDeploymentInfo, the default worker will be used
+WARN 2018-09-29 15:13:27,534 [thread] i.u.websockets.jsr.handleDeployment 76 :UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+INFO 2018-09-29 15:13:27,546 [thread] io.undertow.servlet.log 360 :Initializing Spring embedded WebApplicationContext
+WARN 2018-09-29 15:13:27,862 [thread] o.t.t.TemplateMode.parse 150 :[THYMELEAF][restartedMain] Template Mode 'HTML5' is deprecated. Using Template Mode 'HTML' instead.
+INFO 2018-09-29 15:13:28,041 [thread] c.c.edu.Application.logStarted 59 :Started Application in 1.806 seconds (JVM running for 2.668)

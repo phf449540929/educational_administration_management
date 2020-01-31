@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>教务选课系统首页</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div style="height: 400px">
+    <h1>教务管理系统</h1>
+    <form th:action="@{/login.do}" th:object="${loginForm}" th:method="post">
+        用户名：
+        <label>
+            <input type="text" th:field="*{username}" placeholder="用户名"/>
+        </label><br>
+        密　码：
+        <label>
+            <input type="password" th:field="*{password}" placeholder="密　码"/>
+        </label><br>
+        验证码：
+        <label>
+            <input type="text" th:field="*{verification}" placeholder="验证码"/>
+        </label><br>
+        <div>
+            <img id="verifyUtil" src="/verifyUtil.do" alt="图片看不清？点击重新得到验证码"
+                 onclick="this.src='/verifyUtil.do?' + Math.floor(Math.random() * 100)"
+                 style="margin-top: 3px; ; cursor:pointer"/>
+            <a onclick="document.getElementById('verifyUtil').click()"
+               style="position: relative; bottom: 12px; cursor:pointer">图片看不清？点击重新得到验证码</a>
+        </div>
+        <label>
+            <input type="radio" name="identity" value="DEPARTMENT" th:checked="*{identity.toString() eq 'DEPARTMENT' }"
+                   placeholder="部门"/>
+        </label> 部门
+        <label>
+            <input type="radio" name="identity" value="TEACHER" th:checked="*{identity.toString() eq 'TEACHER' }"
+                   placeholder="教师"/>
+        </label> 教师
+        <label>
+            <input type="radio" name="identity" value="STUDENT" th:checked="*{identity.toString() eq 'STUDENT' }"
+                   placeholder="学生"/>
+        </label> 学生
+        <label>
+            <input type="radio" name="identity" value="VISITOR" th:checked="*{identity.toString() eq 'VISITOR' }"
+                   placeholder="访客"/>
+        </label> 访客
+        <div style="margin-top: 5px">
+            <input type="submit" value="登录"/>
+        </div>
+        <p th:text="*{message}" style="color: red"></p>
+    </form>
+</div>
+
+</body>
+</html>

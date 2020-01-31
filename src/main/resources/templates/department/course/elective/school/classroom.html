@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>选择上课教室</title>
+</head>
+<body>
+
+<p th:text="您已设置了该全校性选修课的上课时间为："></p>
+<p th:text="${'第' + session.beginOrder.toString().split('_')[1] + '至' + session.endOrder.toString().split('_')[1] + '节课'}"></p>
+
+<form th:action="@{classroom.do}" th:method="post" style="width: 1200px">
+    <p th:text="请选择该全校性选修课的上课教室"></p>
+    <ul th:each="classroom, classroomStat : ${classrooms}" style="display: inline-block">
+        <li>
+            <input th:type="radio" th:name="classroom" th:value="*{classroom}"
+                   th:text="*{classroom.toString().substring(10)}"
+                   title="教室">
+        </li>
+    </ul>
+
+    <br><br>
+    <input th:type="submit" title="提交">
+</form>
+
+</body>
+</html>
