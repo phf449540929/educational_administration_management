@@ -46,6 +46,12 @@ public abstract class AbstractCourse {
     private String teacherId;
     @Column
     private TeacherRank teacherNeedRank;
+    @Column
+    private float rollRatio;
+    @Column
+    private float usualRatio;
+    @Column
+    private float experimentalRatio;
 
     public int getCourseId() {
         return courseId;
@@ -157,5 +163,29 @@ public abstract class AbstractCourse {
 
     public void setTeacherNeedRank(TeacherRank teacherNeedRank) {
         this.teacherNeedRank = teacherNeedRank;
+    }
+
+    public float getRollRatio() {
+        return rollRatio;
+    }
+
+    public void setRollRatio(float rollRatio) {
+        this.rollRatio = rollRatio;
+    }
+
+    public float getUsualRatio() {
+        return usualRatio;
+    }
+
+    public void setUsualRatio(float usualRatio) {
+        this.usualRatio = usualRatio;
+    }
+
+    public float getExperimentalRatio() {
+        return experimentalRatio;
+    }
+
+    public void setExperimentalRatio(float experimentalRatio) {
+        this.experimentalRatio = experimentalRatio;
     }
 }

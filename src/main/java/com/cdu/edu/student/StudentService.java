@@ -1,6 +1,7 @@
 package com.cdu.edu.student;
 
 import com.cdu.edu.course.CourseType;
+import com.cdu.edu.course.elective.school.student.SchoolElectiveCourseStudent;
 import com.cdu.edu.course.professional.ProfessionalCourse;
 import com.cdu.edu.course.professional.classes.ProfessionalCourseClass;
 import com.cdu.edu.course.publics.PublicCourse;
@@ -33,7 +34,8 @@ public class StudentService {
      */
     public Student login(String studentId, String studentPassword) {
         Student student = studentRepository.findByStudentId(studentId);
-        return student == null || studentPassword.equals(student.getStudentPassword()) ? student : null;
+        return student == null || studentPassword.equals(student.getStudentPassword()) ? student
+                : null;
     }
 
     public void insert(Student student) {
@@ -49,6 +51,37 @@ public class StudentService {
         return studentClasses;
     }
 
+    public List<Student> getCourseStudent(List<SchoolElectiveCourseStudent> schoolElectiveCourseStudentList){
+        List<String> studentIdList = new ArrayList<>(schoolElectiveCourseStudentList.size());
+        for(SchoolElectiveCourseStudent schoolElectiveCourseStudent : schoolElectiveCourseStudentList){
+            studentIdList.add(schoolElectiveCourseStudent.getStudentId());
+        }
+        return studentRepository.findByStudentId(studentIdList);
+    }
+
+    public List<Student> getCourseClassStudent(List<ProfessionalCourseClass> professionalCourseClassList, List<PublicCourseClass> publicCourseClassList, CourseType courseType) {
+        List<String> classList = new ArrayList<>((professionalCourseClassList == null ? 0 : professionalCourseClassList.size()) + (publicCourseClassList == null ? 0 :publicCourseClassList.size()));
+        switch (courseType){
+            case PROFESSIONAL_COURSE:
+                for (ProfessionalCourseClass courseClass : professionalCourseClassList) {
+                    classList.add(courseClass.getStudentClass());
+                }
+                break;
+            case PUBLIC_COURSE:
+                for (PublicCourseClass courseClass : publicCourseClassList) {
+                    classList.add(courseClass.getStudentClass());
+                }
+                break;
+            default:
+                break;
+        }
+        List<Student> studentList = new ArrayList<>();
+        for(String studentClass : classList){
+            studentList.addAll(studentRepository.findByStudentClass(studentClass));
+        }
+        return studentList;
+    }
+
     public int getCourseClassStudentNumber(String[] classArray) {
         int student = 0;
         for (String classes : classArray) {
@@ -57,17 +90,15 @@ public class StudentService {
         return student;
     }
 
-    public Map<Integer, Integer> getCourseClassStudentNumber(List<ProfessionalCourse> professionalCourseList,
-                                                             Map<Integer, List<ProfessionalCourseClass>> professionalCourseClassMap,
-                                                             List<PublicCourse> publicCourseList,
-                                                             Map<Integer, List<PublicCourseClass>> publicCourseClassMap,
-                                                             CourseType courseType) {
-        Map<Integer, Integer> courseClassStudentNumberMap = new HashMap<>((professionalCourseList != null ? professionalCourseList.size() : 0) + (publicCourseList != null ? publicCourseList.size() : 0));
+    public Map<Integer, Integer> getCourseClassStudentNumber(List<ProfessionalCourse> professionalCourseList, Map<Integer, List<ProfessionalCourseClass>> professionalCourseClassMap, List<PublicCourse> publicCourseList, Map<Integer, List<PublicCourseClass>> publicCourseClassMap, CourseType courseType) {
+        Map<Integer, Integer> courseClassStudentNumberMap =
+                new HashMap<>((professionalCourseList != null ? professionalCourseList.size() : 0) + (publicCourseList != null ? publicCourseList.size() : 0));
         switch (courseType) {
             case PROFESSIONAL_COURSE:
                 for (ProfessionalCourse professionalCourse : professionalCourseList) {
                     int student = 0;
-                    for (ProfessionalCourseClass professionalCourseClass : professionalCourseClassMap.get(professionalCourse.getCourseId())) {
+                    for (ProfessionalCourseClass professionalCourseClass :
+                            professionalCourseClassMap.get(professionalCourse.getCourseId())) {
                         student += studentRepository.findByStudentClass(professionalCourseClass.getStudentClass()).size();
                     }
                     courseClassStudentNumberMap.put(professionalCourse.getCourseId(), student);
@@ -76,7 +107,8 @@ public class StudentService {
             case PUBLIC_COURSE:
                 for (PublicCourse publicCourse : publicCourseList) {
                     int student = 0;
-                    for (PublicCourseClass publicCourseClass : publicCourseClassMap.get(publicCourse.getCourseId())) {
+                    for (PublicCourseClass publicCourseClass :
+                            publicCourseClassMap.get(publicCourse.getCourseId())) {
                         student += studentRepository.findByStudentClass(publicCourseClass.getStudentClass()).size();
                     }
                     courseClassStudentNumberMap.put(publicCourse.getCourseId(), student);

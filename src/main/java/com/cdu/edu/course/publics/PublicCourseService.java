@@ -1,6 +1,5 @@
 package com.cdu.edu.course.publics;
 
-import com.cdu.edu.course.AbstractCourse;
 import com.cdu.edu.course.publics.classes.PublicCourseClass;
 import com.cdu.edu.teacher.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,26 +55,20 @@ public class PublicCourseService {
         return publicCourseRepository.findByCourseId(courseIdList);
     }
 
-    public PublicCourse[][] getPublicCourse(List<PublicCourseClass> publicCourseClassList) {
+    public List<PublicCourse> getPublicCourse(List<PublicCourseClass> publicCourseClassList) {
         List<Integer> courseIdList = new ArrayList<>();
         for (PublicCourseClass publicCourseClass : publicCourseClassList) {
             courseIdList.add(publicCourseClass.getCourseId());
         }
-        List<PublicCourse> publicCourseList = publicCourseRepository.findByCourseId(courseIdList);
-
-        PublicCourse[][] publicCourseArrayArray = new PublicCourse[13][8];
-        for (PublicCourse publicCourse : publicCourseList) {
-            int beginOrder = Integer.parseInt(publicCourse.getCourseBeginOrder().toString().split("_")[1]);
-            int endOrder = Integer.parseInt(publicCourse.getCourseEndOrder().toString().split("_")[1]);
-            int day = Integer.parseInt(publicCourse.getCourseDay().toString().split("_")[1]);
-            for (int i = beginOrder; i <= endOrder; i++) {
-                publicCourseArrayArray[i][day] = publicCourse;
-            }
-        }
-        return publicCourseArrayArray;
+        return publicCourseRepository.findByCourseId(courseIdList);
     }
 
-    public void setPublicCourse(AbstractCourse[][] courseArrayArray, PublicCourse[][] publicCourseArrayArray) {
+    public List<PublicCourse> getPublicCourse(Teacher teacher) {
+        return publicCourseRepository.findByTeacherId(teacher.getTeacherId());
+    }
+
+    /*public void setPublicCourse(AbstractCourse[][] courseArrayArray, PublicCourse[][]
+     publicCourseArrayArray) {
         for (int i = 0; i < publicCourseArrayArray.length; i++) {
             for (int j = 0; j < publicCourseArrayArray[i].length; j++) {
                 if (publicCourseArrayArray[i][j] != null) {
@@ -83,32 +76,37 @@ public class PublicCourseService {
                 }
             }
         }
-    }
+    }*/
 
 
-/*    public List<List<PublicCourse>> getPublicCourse(PublicCourse[][] PublicCourseArrayArray){
+/*    public List<List<PublicCourse>> getPublicCourse(PublicCourse[][]
+PublicCourseArrayArray){
         List<List<PublicCourse>> PublicCourseListList = new ArrayList<>();
         for(PublicCourse[] PublicCourseArray : PublicCourseArrayArray){
-            List<PublicCourse> PublicCourseList = new ArrayList<>(Arrays.asList(PublicCourseArray));
+            List<PublicCourse> PublicCourseList = new ArrayList<>(Arrays.asList
+            (PublicCourseArray));
             PublicCourseListList.add(PublicCourseList);
         }
         return  PublicCourseListList;
     }*/
 
-    public int[][] getPublicCourseLength(PublicCourse[][] publicCourseArrayArray) {
+    /*public int[][] getPublicCourseLength(PublicCourse[][] publicCourseArrayArray) {
         int[][] publicCourseLengthArrayArray = new int[13][8];
         for (int i = 1; i < publicCourseArrayArray.length; i++) {
             for (int j = 1; j < publicCourseArrayArray[i].length; j++) {
                 if (publicCourseArrayArray[i][j] != null) {
                     publicCourseLengthArrayArray[i][j] =
-                            Integer.parseInt(publicCourseArrayArray[i][j].getCourseEndOrder().toString().split("_")[1]) - Integer.parseInt(publicCourseArrayArray[i][j].getCourseBeginOrder().toString().split("_")[1]) + 1;
+                            Integer.parseInt(publicCourseArrayArray[i][j]
+                            .getCourseEndOrder().toString().split("_")[1]) - Integer
+                            .parseInt(publicCourseArrayArray[i][j].getCourseBeginOrder
+                            ().toString().split("_")[1]) + 1;
                 }
             }
         }
         return publicCourseLengthArrayArray;
-    }
+    }*/
 
-    public void setPublicCourseLength(int[][] courseLengthArrayArray,
+    /*public void setPublicCourseLength(int[][] courseLengthArrayArray,
                                       int[][] publicCourseLengthArrayArray) {
         for (int i = 0; i < publicCourseLengthArrayArray.length; i++) {
             for (int j = 0; j < publicCourseLengthArrayArray[i].length; j++) {
@@ -117,7 +115,7 @@ public class PublicCourseService {
                 }
             }
         }
-    }
+    }*/
 
 }
 

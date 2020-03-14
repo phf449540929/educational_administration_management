@@ -1,6 +1,5 @@
 package com.cdu.edu.course.professional;
 
-import com.cdu.edu.course.AbstractCourse;
 import com.cdu.edu.course.professional.classes.ProfessionalCourseClass;
 import com.cdu.edu.teacher.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,27 +55,21 @@ public class ProfessionalCourseService {
         return professionalCourseRepository.findByCourseId(courseIdList);
     }
 
-    public ProfessionalCourse[][] getProfessionalCourse(List<ProfessionalCourseClass> professionalCourseClassList) {
+    public List<ProfessionalCourse> getProfessionalCourse(List<ProfessionalCourseClass> professionalCourseClassList) {
         List<Integer> courseIdList = new ArrayList<>();
         for (ProfessionalCourseClass professionalCourseClass : professionalCourseClassList) {
             courseIdList.add(professionalCourseClass.getCourseId());
         }
-        List<ProfessionalCourse> professionalCourseList = professionalCourseRepository.findByCourseId(courseIdList);
-
-        ProfessionalCourse[][] professionalCourseArrayArray = new ProfessionalCourse[13][8];
-        for (ProfessionalCourse professionalCourse : professionalCourseList) {
-            int beginOrder = Integer.parseInt(professionalCourse.getCourseBeginOrder().toString().split("_")[1]);
-            int endOrder = Integer.parseInt(professionalCourse.getCourseEndOrder().toString().split("_")[1]);
-            int day = Integer.parseInt(professionalCourse.getCourseDay().toString().split("_")[1]);
-            for (int i = beginOrder; i <= endOrder; i++) {
-                professionalCourseArrayArray[i][day] = professionalCourse;
-            }
-        }
-        return professionalCourseArrayArray;
+        return professionalCourseRepository.findByCourseId(courseIdList);
     }
 
-    public void setProfessionalCourse(AbstractCourse[][] courseArrayArray,
-                                      ProfessionalCourse[][] professionalCourseArrayArray) {
+    public List<ProfessionalCourse> getProfessionalCourse(Teacher teacher) {
+        return professionalCourseRepository.findByTeacherId(teacher.getTeacherId());
+    }
+
+    /*public void setProfessionalCourse(AbstractCourse[][] courseArrayArray,
+                                      ProfessionalCourse[][]
+                                      professionalCourseArrayArray) {
         for(int i = 0; i < professionalCourseArrayArray.length; i++){
             for(int j = 0; j < professionalCourseArrayArray[i].length; j++){
                 if(professionalCourseArrayArray[i][j] != null){
@@ -84,41 +77,48 @@ public class ProfessionalCourseService {
                 }
             }
         }
-    }
+    }*/
 
 
-/*    public List<List<ProfessionalCourse>> getProfessionalCourse(ProfessionalCourse[][] professionalCourseArrayArray){
+/*    public List<List<ProfessionalCourse>> getProfessionalCourse
+(ProfessionalCourse[][] professionalCourseArrayArray){
         List<List<ProfessionalCourse>> professionalCourseListList = new ArrayList<>();
         for(ProfessionalCourse[] professionalCourseArray : professionalCourseArrayArray){
-            List<ProfessionalCourse> professionalCourseList = new ArrayList<>(Arrays.asList(professionalCourseArray));
+            List<ProfessionalCourse> professionalCourseList = new ArrayList<>(Arrays
+            .asList(professionalCourseArray));
             professionalCourseListList.add(professionalCourseList);
         }
         return  professionalCourseListList;
     }*/
 
-    public int[][] getProfessionalCourseLength(ProfessionalCourse[][] professionalCourseArrayArray) {
+    /*public int[][] getProfessionalCourseLength(ProfessionalCourse[][]
+    professionalCourseArrayArray) {
         int[][] professionalCourseLengthArrayArray = new int[13][8];
         for (int i = 1; i < professionalCourseArrayArray.length; i++) {
             for (int j = 1; j < professionalCourseArrayArray[i].length; j++) {
                 if (professionalCourseArrayArray[i][j] != null) {
                     professionalCourseLengthArrayArray[i][j] =
-                            Integer.parseInt(professionalCourseArrayArray[i][j].getCourseEndOrder().toString().split("_")[1]) - Integer.parseInt(professionalCourseArrayArray[i][j].getCourseBeginOrder().toString().split("_")[1]) + 1;
+                            Integer.parseInt(professionalCourseArrayArray[i][j]
+                            .getCourseEndOrder().toString().split("_")[1]) - Integer
+                            .parseInt(professionalCourseArrayArray[i][j]
+                            .getCourseBeginOrder().toString().split("_")[1]) + 1;
                 }
             }
         }
         return professionalCourseLengthArrayArray;
-    }
+    }*/
 
-    public void setProfessionalCourseLength(int[][] courseLengthArrayArray,
+    /*public void setProfessionalCourseLength(int[][] courseLengthArrayArray,
                                             int[][] professionalCourseLengthArrayArray) {
         for(int i = 0; i < professionalCourseLengthArrayArray.length; i++){
             for(int j = 0; j < professionalCourseLengthArrayArray[i].length; j++){
                 if(professionalCourseLengthArrayArray[i][j] != 0){
-                    courseLengthArrayArray[i][j] = professionalCourseLengthArrayArray[i][j];
+                    courseLengthArrayArray[i][j] =
+                    professionalCourseLengthArrayArray[i][j];
                 }
             }
         }
-    }
+    }*/
 
 }
 

@@ -25,20 +25,40 @@ public class SchoolElectiveCourseStudentService {
 
     public void setCourseStudent(int[] courseIdArray, Student student) {
         for (int courseId : courseIdArray) {
-            schoolElectiveCourseStudentRepository.save(new SchoolElectiveCourseStudent(courseId, student.getStudentId()));
+            schoolElectiveCourseStudentRepository.save(new SchoolElectiveCourseStudent(courseId,
+                    student.getStudentId()));
         }
+    }
+
+    public List<SchoolElectiveCourseStudent> getCourseStudent(SchoolElectiveCourse course){
+        return schoolElectiveCourseStudentRepository.findByCourseId(course.getCourseId());
     }
 
     public Map<Integer, List<SchoolElectiveCourseStudent>> getCourseStudent(List<SchoolElectiveCourse> schoolElectiveCourseList) {
-        Map<Integer, List<SchoolElectiveCourseStudent>> professionalCourseClassMap = new HashMap<>(schoolElectiveCourseList.size());
+        Map<Integer, List<SchoolElectiveCourseStudent>> schoolElectiveCourseStudentMap =
+                new HashMap<>(schoolElectiveCourseList.size());
         for (SchoolElectiveCourse schoolElectiveCourse : schoolElectiveCourseList) {
-            professionalCourseClassMap.put(schoolElectiveCourse.getCourseId(),
+            schoolElectiveCourseStudentMap.put(schoolElectiveCourse.getCourseId(),
                     schoolElectiveCourseStudentRepository.findByCourseId(schoolElectiveCourse.getCourseId()));
         }
-        return professionalCourseClassMap;
+        return schoolElectiveCourseStudentMap;
     }
 
-    public List<SchoolElectiveCourseStudent> getCourse(Student student){
+    public Map<Integer, Integer> getCourseStudentNumber(List<SchoolElectiveCourse> schoolElectiveCourseList) {
+        Map<Integer, List<SchoolElectiveCourseStudent>> schoolElectiveCourseStudentMap =
+                this.getCourseStudent(schoolElectiveCourseList);
+        Map<Integer, Integer> schoolElectiveCourseStudentNumberMap =
+                new HashMap<>(schoolElectiveCourseStudentMap.size());
+        for (SchoolElectiveCourse course : schoolElectiveCourseList) {
+            int courseId = course.getCourseId();
+            schoolElectiveCourseStudentNumberMap.put(courseId,
+                    schoolElectiveCourseStudentMap.get(courseId).size());
+        }
+        return schoolElectiveCourseStudentNumberMap;
+    }
+
+
+    public List<SchoolElectiveCourseStudent> getCourse(Student student) {
         return schoolElectiveCourseStudentRepository.findByStudentId(student.getStudentId());
     }
 }

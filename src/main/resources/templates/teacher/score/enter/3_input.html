@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>录入成绩</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div style="height: 600px">
+    <form th:action="@{input.do}" th:method="post">
+        <p th:text="请录入成绩"></p>
+
+        <a th:text="${'学号' + '　　　　　'}"></a>
+        <a th:text="${'姓名' + '　'}"></a>
+        <a th:text="${'卷面成绩' + '　　　　　　'}"></a>
+        <a th:text="${'平时成绩' + '　　　　　　'}"></a>
+        <a th:text="${'实验成绩'}"></a>
+        <br>
+
+        <th:block th:each="student, studentStat : ${session.studentList}">
+            <label th:object="${student}">
+                <a th:text="*{studentId}"></a>
+                <a th:text="*{studentName.length() == 3 ? studentName : studentName + '　'}"></a>
+                <input th:type="text" th:name="*{studentId + 'RollScore'}" placeholder="卷面成绩">
+                <input th:type="text" th:name="*{studentId + 'UsualScore'}" placeholder="平时成绩">
+                <input th:type="text" th:name="*{studentId + 'ExperimentalScore'}" placeholder="实验成绩">
+            </label>
+            <br>
+        </th:block>
+
+        <br>
+        <label>
+            <input th:type="submit">
+        </label>
+    </form>
+</div>
+
+</body>
+</html>

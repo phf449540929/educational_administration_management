@@ -1,6 +1,5 @@
 package com.cdu.edu.course.elective.school;
 
-import com.cdu.edu.course.AbstractCourse;
 import com.cdu.edu.course.elective.school.student.SchoolElectiveCourseStudent;
 import com.cdu.edu.teacher.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,8 @@ public class SchoolElectiveCourseService {
     /**
      * description: setSchoolElectiveCourse the professional course
      *
-     * @param schoolElectiveCourse the professional course would be setSchoolElectiveCourse
+     * @param schoolElectiveCourse the professional course would be
+     *                             setSchoolElectiveCourse
      */
     public SchoolElectiveCourse setSchoolElectiveCourse(SchoolElectiveCourse schoolElectiveCourse) {
         return schoolElectiveCourseRepository.save(schoolElectiveCourse);
@@ -56,27 +56,22 @@ public class SchoolElectiveCourseService {
         return schoolElectiveCourseRepository.findByCourseId(courseIdList);
     }
 
-    public SchoolElectiveCourse[][] getSchoolElectiveCourse(List<SchoolElectiveCourseStudent> schoolElectiveCourseStudentList) {
+    public List<SchoolElectiveCourse> getSchoolElectiveCourse(List<SchoolElectiveCourseStudent> schoolElectiveCourseStudentList) {
         List<Integer> courseIdList = new ArrayList<>();
-        for (SchoolElectiveCourseStudent schoolElectiveCourseStudent : schoolElectiveCourseStudentList) {
+        for (SchoolElectiveCourseStudent schoolElectiveCourseStudent :
+                schoolElectiveCourseStudentList) {
             courseIdList.add(schoolElectiveCourseStudent.getCourseId());
         }
-        List<SchoolElectiveCourse> schoolElectiveCourseList = schoolElectiveCourseRepository.findByCourseId(courseIdList);
-
-        SchoolElectiveCourse[][] schoolElectiveCourseArrayArray = new SchoolElectiveCourse[13][8];
-        for (SchoolElectiveCourse schoolElectiveCourse : schoolElectiveCourseList) {
-            int beginOrder = Integer.parseInt(schoolElectiveCourse.getCourseBeginOrder().toString().split("_")[1]);
-            int endOrder = Integer.parseInt(schoolElectiveCourse.getCourseEndOrder().toString().split("_")[1]);
-            int day = Integer.parseInt(schoolElectiveCourse.getCourseDay().toString().split("_")[1]);
-            for (int i = beginOrder; i <= endOrder; i++) {
-                schoolElectiveCourseArrayArray[i][day] = schoolElectiveCourse;
-            }
-        }
-        return schoolElectiveCourseArrayArray;
+        return schoolElectiveCourseRepository.findByCourseId(courseIdList);
     }
 
-    public void setSchoolElectiveCourse(AbstractCourse[][] courseArrayArray,
-                                        SchoolElectiveCourse[][] schoolElectiveCourseArrayArray) {
+    public List<SchoolElectiveCourse> getSchoolElectiveCourse(Teacher teacher) {
+        return schoolElectiveCourseRepository.findByTeacherId(teacher.getTeacherId());
+    }
+
+    /*public void setSchoolElectiveCourse(AbstractCourse[][] courseArrayArray,
+                                        SchoolElectiveCourse[][]
+                                        schoolElectiveCourseArrayArray) {
         for (int i = 0; i < schoolElectiveCourseArrayArray.length; i++) {
             for (int j = 0; j < schoolElectiveCourseArrayArray[i].length; j++) {
                 if (schoolElectiveCourseArrayArray[i][j] != null) {
@@ -84,39 +79,48 @@ public class SchoolElectiveCourseService {
                 }
             }
         }
-    }
+    }*/
 
-/*    public List<List<SchoolElectiveCourse>> getSchoolElectiveCourse(SchoolElectiveCourse[][] schoolElectiveCourseArrayArray){
+/*    public List<List<SchoolElectiveCourse>> getSchoolElectiveCourse
+(SchoolElectiveCourse[][] schoolElectiveCourseArrayArray){
         List<List<SchoolElectiveCourse>> schoolElectiveCourseListList = new ArrayList<>();
-        for(SchoolElectiveCourse[] schoolElectiveCourseArray : schoolElectiveCourseArrayArray){
-            List<SchoolElectiveCourse> schoolElectiveCourseList = new ArrayList<>(Arrays.asList(schoolElectiveCourseArray));
+        for(SchoolElectiveCourse[] schoolElectiveCourseArray :
+        schoolElectiveCourseArrayArray){
+            List<SchoolElectiveCourse> schoolElectiveCourseList = new ArrayList<>
+            (Arrays.asList(schoolElectiveCourseArray));
             schoolElectiveCourseListList.add(schoolElectiveCourseList);
         }
         return  schoolElectiveCourseListList;
     }*/
 
-    public int[][] getSchoolElectiveCourseLength(SchoolElectiveCourse[][] schoolElectiveCourseArrayArray) {
+    /*public int[][] getSchoolElectiveCourseLength(SchoolElectiveCourse[][]
+    schoolElectiveCourseArrayArray) {
         int[][] schoolElectiveCourseLengthArray = new int[13][8];
         for (int i = 1; i < schoolElectiveCourseArrayArray.length; i++) {
             for (int j = 1; j < schoolElectiveCourseArrayArray[i].length; j++) {
                 if (schoolElectiveCourseArrayArray[i][j] != null) {
                     schoolElectiveCourseLengthArray[i][j] =
-                            Integer.parseInt(schoolElectiveCourseArrayArray[i][j].getCourseEndOrder().toString().split("_")[1]) - Integer.parseInt(schoolElectiveCourseArrayArray[i][j].getCourseBeginOrder().toString().split("_")[1]) + 1;
+                            Integer.parseInt(schoolElectiveCourseArrayArray[i][j]
+                            .getCourseEndOrder().toString().split("_")[1]) - Integer
+                            .parseInt(schoolElectiveCourseArrayArray[i][j]
+                            .getCourseBeginOrder().toString().split("_")[1]) + 1;
                 }
             }
         }
         return schoolElectiveCourseLengthArray;
-    }
+    }*/
 
-    public void setSchoolElectiveCourseLength(int[][] courseLengthArrayArray,
-                                              int[][] schoolElectiveCourseLengthArrayArray) {
+    /*public void setSchoolElectiveCourseLength(int[][] courseLengthArrayArray,
+                                              int[][]
+                                              schoolElectiveCourseLengthArrayArray) {
         for (int i = 0; i < schoolElectiveCourseLengthArrayArray.length; i++) {
             for (int j = 0; j < schoolElectiveCourseLengthArrayArray[i].length; j++) {
                 if (schoolElectiveCourseLengthArrayArray[i][j] != 0) {
-                    courseLengthArrayArray[i][j] = schoolElectiveCourseLengthArrayArray[i][j];
+                    courseLengthArrayArray[i][j] =
+                    schoolElectiveCourseLengthArrayArray[i][j];
                 }
             }
         }
-    }
+    }*/
 }
 

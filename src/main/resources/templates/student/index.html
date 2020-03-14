@@ -77,12 +77,16 @@
         <input th:type="submit" th:value="查看学生个人课表" title="查看学生个人课表"/>
     </form>
     <br>
-    <form th:action="@{course/elective/school/set.do}" th:method="get">
+    <form th:action="@{course/elective/set.do}" th:method="get">
         <input th:type="submit" th:value="选择全校性选修课" title="选择全校性选修课"/>
     </form>
     <br>
-    <form th:action="@{course/elective/sports/set.do}" th:method="get">
+<!--    <form th:action="@{course/elective/sports/set.do}" th:method="get">
         <input th:type="submit" th:value="选择体育选修课" title="选择体育选修课"/>
+    </form>-->
+    <br>
+    <form th:action="@{score/select.do}" th:method="get">
+        <input th:type="submit" th:value="查看成绩" title="查看成绩"/>
     </form>
     <br>
     <form th:action="@{/}" th:method="get">

@@ -40,16 +40,20 @@
         <p th:text="课程开始时间："></p>
         <ul th:each="order, orderStat : ${orderArray}" style="display: inline-block; width: 50px">
             <li>
-                <input th:type="radio" th:name="beginOrder" th:value="*{order}"
-                       th:text="*{order.toString().split('_')[1]}" placeholder="时间">
+                <label>
+                    <input th:type="radio" th:name="beginOrder" th:value="*{order}"
+                           th:text="*{order.toString().split('_')[1]}" placeholder="时间">
+                </label>
             </li>
         </ul>
 
         <p th:text="课程结束时间："></p>
         <ul th:each="order, orderStat : ${orderArray}" style="display: inline-block; width: 50px">
             <li>
-                <input th:type="radio" th:name="endOrder" th:value="*{order}"
-                       th:text="*{order.toString().split('_')[1]}" placeholder="时间">
+                <label>
+                    <input th:type="radio" th:name="endOrder" th:value="*{order}"
+                           th:text="*{order.toString().split('_')[1]}" placeholder="时间">
+                </label>
             </li>
         </ul>
 

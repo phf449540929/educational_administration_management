@@ -26,4 +26,6 @@ public interface ProfessionalCourseRepository extends JpaRepository<Professional
      */
     public List<ProfessionalCourse> findByCourseId(List<Integer> courseIdList);
 
+    public List<ProfessionalCourse> findByTeacherId(String teacherId);
+
 }

@@ -27,7 +27,9 @@
         <p th:text="请选择您要设置专业课的班级"></p>
         <ul th:each="class, classStat : ${classSet}" style="display: inline-block">
             <li style="width: 150px">
-                <input th:type="checkbox" th:name="classArray" th:value="*{class}" th:text="*{class}" placeholder="班级">
+                <label>
+                    <input th:type="checkbox" th:name="classArray" th:value="*{class}" th:text="*{class}" placeholder="班级">
+                </label>
             </li>
         </ul>
 

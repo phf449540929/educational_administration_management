@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>录入成绩占比</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div style="height: 600px">
+    <form th:action="@{ratio.do}" method="post">
+        <p th:text="请输入各部分成绩占比"></p>
+
+        平时成绩占比：
+        <label>
+            <input th:type="text" th:name="rollRatio" placeholder="卷面成绩占比">
+        </label><br>
+        卷面成绩占比：
+        <label>
+            <input th:type="text" th:name="usualRatio" placeholder="平时成绩占比">
+        </label><br>
+        实验成绩占比：
+        <label>
+            <input th:type="text" th:name="experimentalRatio" placeholder="实验成绩占比">
+        </label><br>
+        <br>
+        <input type="submit">
+    </form>
+</div>
+
+</body>
+</html>

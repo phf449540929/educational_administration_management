@@ -85,7 +85,7 @@ public class DepartmentController {
     }
 
     /**
-     * description: save setProfessionalCourse the professional course, and find the department/course/achieve.html
+     * description: save setProfessionalCourse the professional course, and find the department/course/return.html
      *
      * @return java.lang.String
      */
@@ -164,7 +164,7 @@ public class DepartmentController {
      */
     @RequestMapping("course/professional/name.do")
     public String setProfessionalName(String name, Model model, HttpSession session) {
-//        session.setAttribute("name", name);
+        session.setAttribute("name", name);
 //        session.setAttribute("ASSISTANT", TeacherRank.ASSISTANT);
 //        session.setAttribute("LECTURER", TeacherRank.LECTURER);
 //        session.setAttribute("ASSOCIATE_PROFESSOR", TeacherRank.ASSOCIATE_PROFESSOR);
@@ -253,7 +253,7 @@ public class DepartmentController {
     }
 
     /**
-     * description: save setProfessionalCourse the professional course, and find the department/course/achieve.html
+     * description: save setProfessionalCourse the professional course, and find the department/course/return.html
      *
      * @return java.lang.String
      */
@@ -286,7 +286,7 @@ public class DepartmentController {
     @RequestMapping("course/public/set.do")
     public String toPublic(Model model) {
         model.addAttribute("classSet", studentService.getAllClass());
-        return "department/course/public/class";
+        return "department/course/public/1_class";
     }
 
     /**
@@ -298,7 +298,7 @@ public class DepartmentController {
     public String setPublicClass(String[] classArray, Model model, HttpSession session) {
         session.setAttribute("classArray", classArray);
         model.addAttribute("year", Calendar.getInstance().get(Calendar.YEAR));
-        return "department/course/public/year";
+        return "department/course/public/2_year";
     }
 
     /**
@@ -311,7 +311,7 @@ public class DepartmentController {
         session.setAttribute("year", year);
         session.setAttribute("LAST_HALF_SEMESTER", CourseSemester.LAST_HALF_SEMESTER);
         session.setAttribute("NEXT_HALF_SEMESTER", CourseSemester.NEXT_HALF_SEMESTER);
-        return "department/course/public/semester";
+        return "department/course/public/3_semester";
     }
 
     /**
@@ -322,7 +322,7 @@ public class DepartmentController {
     @RequestMapping("course/public/semester.do")
     public String setPublicSemester(CourseSemester semester, HttpSession session) {
         session.setAttribute("semester", semester);
-        return "department/course/public/name";
+        return "department/course/public/4_name";
     }
 
     /**
@@ -331,13 +331,15 @@ public class DepartmentController {
      * @return java.lang.String
      */
     @RequestMapping("course/public/name.do")
-    public String setPublicName(String name, HttpSession session) {
+    public String setPublicName(String name, Model model, HttpSession session) {
         session.setAttribute("name", name);
-        session.setAttribute("ASSISTANT", TeacherRank.ASSISTANT);
-        session.setAttribute("LECTURER", TeacherRank.LECTURER);
-        session.setAttribute("ASSOCIATE_PROFESSOR", TeacherRank.ASSOCIATE_PROFESSOR);
-        session.setAttribute("PROFESSOR", TeacherRank.PROFESSOR);
-        return "department/course/public/rank";
+//        session.setAttribute("ASSISTANT", TeacherRank.ASSISTANT);
+//        session.setAttribute("LECTURER", TeacherRank.LECTURER);
+//        session.setAttribute("ASSOCIATE_PROFESSOR", TeacherRank.ASSOCIATE_PROFESSOR);
+//        session.setAttribute("PROFESSOR", TeacherRank.PROFESSOR);
+//        return "department/course/public/5_rank";
+        model.addAttribute("weeks", CourseWeek.values());
+        return "department/course/public/6_week";
     }
 
     /**
@@ -349,7 +351,7 @@ public class DepartmentController {
     public String setPublicRank(TeacherRank rank, Model model, HttpSession session) {
         session.setAttribute("rank", rank);
         model.addAttribute("weeks", CourseWeek.values());
-        return "department/course/public/week";
+        return "department/course/public/6_week";
     }
 
     /**
@@ -368,7 +370,7 @@ public class DepartmentController {
         session.setAttribute("DAY_5", CourseDay.DAY_5);
         session.setAttribute("DAY_6", CourseDay.DAY_6);
         session.setAttribute("DAY_7", CourseDay.DAY_7);
-        return "department/course/public/day";
+        return "department/course/public/7_day";
     }
 
     /**
@@ -380,7 +382,7 @@ public class DepartmentController {
     public String setPublicDay(CourseDay day, Model model, HttpSession session) {
         session.setAttribute("day", day);
         model.addAttribute("orderArray", CourseOrder.values());
-        return "department/course/public/order";
+        return "department/course/public/8_order";
     }
 
     /**
@@ -393,7 +395,7 @@ public class DepartmentController {
         session.setAttribute("beginOrder", beginOrder);
         session.setAttribute("endOrder", endOrder);
         model.addAttribute("classrooms", CourseClassroom.values());
-        return "department/course/public/classroom";
+        return "department/course/public/9_classroom";
     }
 
     /**
@@ -413,11 +415,11 @@ public class DepartmentController {
         session.setAttribute("PUBLIC_COURSE", CourseType.PUBLIC_COURSE);
         session.setAttribute("SCHOOL_ELECTIVE_COURSE", CourseType.SCHOOL_ELECTIVE_COURSE);
         session.setAttribute("SPORTS_ELECTIVE_COURSE", CourseType.SPORTS_ELECTIVE_COURSE);
-        return "department/course/public/ensure";
+        return "department/course/public/10_ensure";
     }
 
     /**
-     * description: save the public course, and find the department/course/achieve.html
+     * description: save the public course, and find the department/course/return.html
      *
      * @return java.lang.String
      */
@@ -449,7 +451,7 @@ public class DepartmentController {
      */
     @RequestMapping("course/elective/school/set.do")
     public String toSchool(Model model) {
-        return "department/course/elective/school/size";
+        return "department/course/elective/school/1_size";
     }
 
     /**
@@ -461,7 +463,7 @@ public class DepartmentController {
     public String setSchoolSize(int size, Model model, HttpSession session) {
         session.setAttribute("size", size);
         model.addAttribute("year", Calendar.getInstance().get(Calendar.YEAR));
-        return "department/course/elective/school/year";
+        return "department/course/elective/school/2_year";
     }
 
     /**
@@ -474,7 +476,7 @@ public class DepartmentController {
         session.setAttribute("year", year);
         session.setAttribute("LAST_HALF_SEMESTER", CourseSemester.LAST_HALF_SEMESTER);
         session.setAttribute("NEXT_HALF_SEMESTER", CourseSemester.NEXT_HALF_SEMESTER);
-        return "department/course/elective/school/semester";
+        return "department/course/elective/school/3_semester";
     }
 
     /**
@@ -485,7 +487,7 @@ public class DepartmentController {
     @RequestMapping("course/elective/school/semester.do")
     public String setSchoolSemester(CourseSemester semester, HttpSession session) {
         session.setAttribute("semester", semester);
-        return "department/course/elective/school/name";
+        return "department/course/elective/school/4_name";
     }
 
     /**
@@ -494,13 +496,15 @@ public class DepartmentController {
      * @return java.lang.String
      */
     @RequestMapping("course/elective/school/name.do")
-    public String setSchoolName(String name, HttpSession session) {
+    public String setSchoolName(String name, Model model, HttpSession session) {
         session.setAttribute("name", name);
-        session.setAttribute("ASSISTANT", TeacherRank.ASSISTANT);
-        session.setAttribute("LECTURER", TeacherRank.LECTURER);
-        session.setAttribute("ASSOCIATE_PROFESSOR", TeacherRank.ASSOCIATE_PROFESSOR);
-        session.setAttribute("PROFESSOR", TeacherRank.PROFESSOR);
-        return "department/course/elective/school/rank";
+//        session.setAttribute("ASSISTANT", TeacherRank.ASSISTANT);
+//        session.setAttribute("LECTURER", TeacherRank.LECTURER);
+//        session.setAttribute("ASSOCIATE_PROFESSOR", TeacherRank.ASSOCIATE_PROFESSOR);
+//        session.setAttribute("PROFESSOR", TeacherRank.PROFESSOR);
+//        return "department/course/elective/school/5_rank";
+        model.addAttribute("weeks", CourseWeek.values());
+        return "department/course/elective/school/6_week";
     }
 
     /**
@@ -512,7 +516,7 @@ public class DepartmentController {
     public String setSchoolRank(TeacherRank rank, Model model, HttpSession session) {
         session.setAttribute("rank", rank);
         model.addAttribute("weeks", CourseWeek.values());
-        return "department/course/elective/school/week";
+        return "department/course/elective/school/6_week";
     }
 
     /**
@@ -531,7 +535,7 @@ public class DepartmentController {
         session.setAttribute("DAY_5", CourseDay.DAY_5);
         session.setAttribute("DAY_6", CourseDay.DAY_6);
         session.setAttribute("DAY_7", CourseDay.DAY_7);
-        return "department/course/elective/school/day";
+        return "department/course/elective/school/7_day";
     }
 
     /**
@@ -543,7 +547,7 @@ public class DepartmentController {
     public String setSchoolDay(CourseDay day, Model model, HttpSession session) {
         session.setAttribute("day", day);
         model.addAttribute("orderArray", CourseOrder.values());
-        return "department/course/elective/school/order";
+        return "department/course/elective/school/8_order";
     }
 
     /**
@@ -556,7 +560,7 @@ public class DepartmentController {
         session.setAttribute("beginOrder", beginOrder);
         session.setAttribute("endOrder", endOrder);
         model.addAttribute("classrooms", CourseClassroom.values());
-        return "department/course/elective/school/classroom";
+        return "department/course/elective/school/9_classroom";
     }
 
     /**
@@ -573,11 +577,11 @@ public class DepartmentController {
         session.setAttribute("PUBLIC_COURSE", CourseType.PUBLIC_COURSE);
         session.setAttribute("SCHOOL_ELECTIVE_COURSE", CourseType.SCHOOL_ELECTIVE_COURSE);
         session.setAttribute("SPORTS_ELECTIVE_COURSE", CourseType.SPORTS_ELECTIVE_COURSE);
-        return "department/course/elective/school/ensure";
+        return "department/course/elective/school/10_ensure";
     }
 
     /**
-     * description: save setProfessionalCourse the professional course, and find the department/course/achieve.html
+     * description: save setProfessionalCourse the professional course, and find the department/course/return.html
      *
      * @return java.lang.String
      */

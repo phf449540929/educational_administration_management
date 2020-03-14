@@ -25,19 +25,26 @@ public class ProfessionalCourseClassService {
 
     public void setCourseClass(int courseId, String[] classArray) {
         for (String studentClass : classArray) {
-            professionalCourseClassRepository.save(new ProfessionalCourseClass(courseId, studentClass));
+            professionalCourseClassRepository.save(new ProfessionalCourseClass(courseId,
+                    studentClass));
         }
     }
 
+    public List<ProfessionalCourseClass> getCourseClass(ProfessionalCourse professionalCourse) {
+        return professionalCourseClassRepository.findByCourseId(professionalCourse.getCourseId());
+    }
+
     public Map<Integer, List<ProfessionalCourseClass>> getCourseClass(List<ProfessionalCourse> professionalCourseList) {
-        Map<Integer, List<ProfessionalCourseClass>> professionalCourseClassMap = new HashMap<>(professionalCourseList.size());
+        Map<Integer, List<ProfessionalCourseClass>> professionalCourseClassMap =
+                new HashMap<>(professionalCourseList.size());
         for (ProfessionalCourse professionalCourse : professionalCourseList) {
-            professionalCourseClassMap.put(professionalCourse.getCourseId(), professionalCourseClassRepository.findByCourseId(professionalCourse.getCourseId()));
+            professionalCourseClassMap.put(professionalCourse.getCourseId(),
+                    professionalCourseClassRepository.findByCourseId(professionalCourse.getCourseId()));
         }
         return professionalCourseClassMap;
     }
 
-    public List<ProfessionalCourseClass> getCourse(Student student){
+    public List<ProfessionalCourseClass> getCourse(Student student) {
         return professionalCourseClassRepository.findByStudentClass(student.getStudentClass());
     }
 

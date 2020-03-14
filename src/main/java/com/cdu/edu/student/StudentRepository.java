@@ -28,6 +28,14 @@ public interface StudentRepository extends JpaRepository<Student, String> {
      * @param studentId student's id
      * @return com.cdu.edu.student.Student
      */
+    List<Student> findByStudentId(List<String> studentIdList);
+
+    /**
+     * description: find the student by student's id
+     *
+     * @param studentId student's id
+     * @return com.cdu.edu.student.Student
+     */
     List<Student> findByStudentClass(String studentClass);
 
     /**

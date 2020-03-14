@@ -1,0 +1,7 @@
+0:0:0:0:0:0:0:1 - - [13/Feb/2020:16:22:33 +0800] "GET / HTTP/1.1" 200 2267
+0:0:0:0:0:0:0:1 - - [13/Feb/2020:16:22:34 +0800] "GET /verifyUtil.do HTTP/1.1" 200 656
+0:0:0:0:0:0:0:1 - - [13/Feb/2020:16:22:45 +0800] "POST /login.do HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [13/Feb/2020:16:22:46 +0800] "GET /teacher/login.do?username=201610414415&password=123456 HTTP/1.1" 200 2557
+0:0:0:0:0:0:0:1 - - [13/Feb/2020:16:22:47 +0800] "GET /teacher/score/enter/get.do HTTP/1.1" 200 3380
+0:0:0:0:0:0:0:1 - - [13/Feb/2020:16:22:51 +0800] "POST /teacher/score/enter/select.do HTTP/1.1" 200 1105
+0:0:0:0:0:0:0:1 - - [13/Feb/2020:16:23:40 +0800] "POST /teacher/score/enter/ratio.do HTTP/1.1" 200 139

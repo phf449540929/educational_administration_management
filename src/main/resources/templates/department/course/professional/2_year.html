@@ -30,7 +30,10 @@
 
     <form th:action="@{year.do}" th:method="post">
         <p th:text="请设置该专业课的开课年份"></p>
-        年份：<input th:type="text" th:name="year" placeholder="年份">
+        年份：
+        <label>
+            <input th:type="text" th:name="year" placeholder="年份">
+        </label>
         <p th:text="'您只能输入今年（' + ${year} + '）或大于' + ${year} + '的年份'" style="color: red"></p>
 
         <input type="submit">

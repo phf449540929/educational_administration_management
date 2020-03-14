@@ -26,4 +26,6 @@ public interface SchoolElectiveCourseRepository extends JpaRepository<SchoolElec
      */
     public List<SchoolElectiveCourse> findByCourseId(List<Integer> courseIdList);
 
+    public List<SchoolElectiveCourse> findByTeacherId(String teacherId);
+
 }

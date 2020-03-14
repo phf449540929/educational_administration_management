@@ -29,6 +29,10 @@ public class PublicCourseClassService {
         }
     }
 
+    public List<PublicCourseClass> getCourseClass(PublicCourse publicCourse) {
+        return publicCourseClassRepository.findByCourseId(publicCourse.getCourseId());
+    }
+
     public Map<Integer, List<PublicCourseClass>> getCourseClass(List<PublicCourse> publicCourseList) {
         Map<Integer, List<PublicCourseClass>> publicCourseClassMap = new HashMap<>(publicCourseList.size());
         for (PublicCourse publicCourse : publicCourseList) {
