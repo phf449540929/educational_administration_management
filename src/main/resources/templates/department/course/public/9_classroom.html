@@ -30,14 +30,18 @@
         <p th:text="请选择该公共课的上课教室"></p>
         <ul th:each="classroom, classroomStat : ${classrooms}" style="display: inline-block">
             <li>
-                <input th:type="radio" th:name="classroom" th:value="*{classroom}"
-                       th:text="*{classroom.toString().substring(10)}"
-                       title="教室">
+                <label>
+                    <input th:type="radio" th:name="classroom" th:value="*{classroom}"
+                           th:text="*{classroom.toString().substring(10)}">
+                </label>
             </li>
         </ul>
 
         <br><br>
-        <input th:type="submit" title="提交">
+        <label>
+            <input th:type="submit" th:value="提交">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
     </form>
 </div>
 

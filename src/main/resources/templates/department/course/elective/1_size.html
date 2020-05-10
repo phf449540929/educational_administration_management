@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>设置最大上课人数</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div style="height: 600px; padding-left: 100px">
+    <form th:action="@{size.do}" th:method="post">
+        <p th:text="请设置该全校性选修课的最大上课人数"></p>
+        年份：
+        <label>
+            <input th:type="text" th:name="size" th:placeholder="最大上课人数">
+        </label>
+        <p th:text="请输入0以上的数字" style="color: red"></p>
+
+        <label>
+            <input th:type="submit" th:value="提交">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
+    </form>
+</div>
+
+</body>
+</html>

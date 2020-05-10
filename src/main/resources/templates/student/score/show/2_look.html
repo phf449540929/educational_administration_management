@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学期成绩</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+
+<div style="height: 600px">
+
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        td {
+            border: solid 1px;
+        }
+    </style>
+
+    <table>
+        <tr>
+            <td th:text="年份"></td>
+            <td th:text="${session.year}"></td>
+        </tr>
+        <tr>
+            <td th:text="学期"></td>
+            <td th:text="${session.semester eq session.LAST_HALF_SEMESTER ? '上半学期' : '下半学期'}"></td>
+        </tr>
+    </table>
+
+    <p th:text="您的学期成绩如下："></p>
+
+    <table>
+        <caption th:text="学生成绩"></caption>
+
+        <thead>
+        <tr>
+            <td th:text="成绩编号"></td>
+            <td th:text="课程名字"></td>
+            <td th:text="总成绩"></td>
+        </tr>
+        </thead>
+
+        <tbody th:each="score, scoreStat : ${scoreList}">
+        <tr th:object="${score}">
+            <td th:text="*{scoreId}"></td>
+            <td th:text="${courseList.get(scoreStat.index).getCourseName()}"></td>
+            <td th:text="*{#strings.substring(totalScore, 0, 5)}"></td>
+        </tr>
+        </tbody>
+
+    </table>
+
+    <br>
+    <label>
+        <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+    </label>
+
+</div>
+
+</body>
+</html>

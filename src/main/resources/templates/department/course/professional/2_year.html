@@ -32,11 +32,14 @@
         <p th:text="请设置该专业课的开课年份"></p>
         年份：
         <label>
-            <input th:type="text" th:name="year" placeholder="年份">
+            <input th:type="text" th:name="year" th:placeholder="年份">
         </label>
-        <p th:text="'您只能输入今年（' + ${year} + '）或大于' + ${year} + '的年份'" style="color: red"></p>
 
-        <input type="submit">
+        <br><br>
+        <label>
+            <input th:type="submit" th:value="提交">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
     </form>
 </div>
 

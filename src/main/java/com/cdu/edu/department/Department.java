@@ -5,12 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * description:
+ * description: 部门类
  *
  * @author haifeng
  * @version 1.0
  * @date 2018/10/15 0015 下午 13:33
- * @since jdk
+ * @since jdk 10.0.1
  */
 @Entity
 public class Department {

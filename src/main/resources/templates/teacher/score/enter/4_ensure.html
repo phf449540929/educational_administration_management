@@ -5,68 +5,90 @@
 <head>
     <meta charset="UTF-8">
     <title>确认成绩</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
 
-<p th:text="学生成绩如下："></p>
+<div style="height: 600px">
 
-<style type="text/css">
-    table {
-        border-collapse: collapse;
-        text-align: center;
-    }
+    <p th:text="学生成绩如下："></p>
 
-    td {
-        border: solid 1px;
-    }
-</style>
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+            text-align: center;
+        }
 
-<table>
-    <caption th:text="学生成绩"></caption>
+        td {
+            border: solid 1px;
+        }
+    </style>
 
-    <thead>
-    <tr>
-        <td th:text="成绩id"></td>
-        <td th:text="学生学号"></td>
-        <td th:text="学生姓名"></td>
-        <td th:text="课程id"></td>
-        <td th:text="课程名字"></td>
-        <td th:text="卷面成绩占比"></td>
-        <td th:text="卷面成绩"></td>
-        <td th:text="平时成绩占比"></td>
-        <td th:text="平时成绩"></td>
-        <td th:text="实验成绩占比"></td>
-        <td th:text="实验成绩"></td>
-        <td th:text="总成绩"></td>
-        <td th:text="教师教职工号"></td>
-        <td th:text="教师姓名"></td>
-    </tr>
-    </thead>
+    <table>
+        <caption th:text="学生成绩"></caption>
 
-    <tbody th:each="score, scoreStat : ${session.scoreList}">
-    <tr th:object="${score}">
-        <td th:text="*{scoreId}"></td>
-        <td th:text="*{studentId}"></td>
-        <td th:text="${session.studentList.get(scoreStat.index).studentName}"></td>
-        <td th:text="*{courseId}"></td>
-        <td th:text="${session.course.getCourseName()}"></td>
-        <td th:text="${session.course.getRollRatio()}"></td>
-        <td th:text="*{rollScore}"></td>
-        <td th:text="${session.course.getUsualRatio()}"></td>
-        <td th:text="*{usualScore}"></td>
-        <td th:text="${session.course.getExperimentalRatio()}"></td>
-        <td th:text="*{experimentalScore}"></td>
-        <td th:text="${score.totalScore}"></td>
-        <td th:text="${session.teacher.getTeacherId()}"></td>
-        <td th:text="${session.teacher.getTeacherName()}"></td>
-    </tr>
-    </tbody>
+        <thead>
+        <tr>
+            <td th:text="成绩id"></td>
+            <td th:text="学生学号"></td>
+            <td th:text="学生姓名"></td>
+            <td th:text="课程id"></td>
+            <td th:text="课程名字"></td>
+            <td th:text="卷面成绩占比"></td>
+            <td th:text="卷面成绩"></td>
+            <td th:text="平时成绩占比"></td>
+            <td th:text="平时成绩"></td>
+            <td th:text="实验成绩占比"></td>
+            <td th:text="实验成绩"></td>
+            <td th:text="总成绩"></td>
+            <td th:text="教师教职工号"></td>
+            <td th:text="教师姓名"></td>
+        </tr>
+        </thead>
 
-</table>
+        <tbody th:each="score, scoreStat : ${session.scoreList}">
+        <tr th:object="${score}">
+            <td th:text="*{scoreId}"></td>
+            <td th:text="*{studentId}"></td>
+            <td th:text="${session.studentList.get(scoreStat.index).studentName}"></td>
+            <td th:text="*{courseId}"></td>
+            <td th:text="${session.course.getCourseName()}"></td>
+            <td th:text="${session.course.getRollRatio()}"></td>
+            <td th:text="*{rollScore}"></td>
+            <td th:text="${session.course.getUsualRatio()}"></td>
+            <td th:text="*{usualScore}"></td>
+            <td th:text="${session.course.getExperimentalRatio()}"></td>
+            <td th:text="*{experimentalScore}"></td>
+            <td th:text="*{#strings.substring(totalScore, 0, 5)}"></td>
+            <td th:text="${session.teacher.getTeacherId()}"></td>
+            <td th:text="${session.teacher.getTeacherName()}"></td>
+        </tr>
+        </tbody>
 
-<form th:action="@{ensure.do}" th:method="post">
-    <input th:type="submit" th:value="确认" title="确认">
-</form>
+    </table>
+
+    <br>
+    <form th:action="@{ensure.do}" th:method="post">
+        <label>
+            <input th:type="submit" th:value="确认">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
+    </form>
+
+</div>
 
 </body>
 </html>

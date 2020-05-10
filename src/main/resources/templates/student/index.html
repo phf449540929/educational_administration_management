@@ -4,7 +4,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>教师主页</title>
+    <title>学生主页</title>
     <style>
         html, body {
             width: 100%;
@@ -73,7 +73,7 @@
     </table>
 
     <br>
-    <form th:action="@{course/look.do}" th:method="get">
+    <form th:action="@{course/timetable/get.do}" th:method="get">
         <input th:type="submit" th:value="查看学生个人课表" title="查看学生个人课表"/>
     </form>
     <br>
@@ -81,11 +81,7 @@
         <input th:type="submit" th:value="选择全校性选修课" title="选择全校性选修课"/>
     </form>
     <br>
-<!--    <form th:action="@{course/elective/sports/set.do}" th:method="get">
-        <input th:type="submit" th:value="选择体育选修课" title="选择体育选修课"/>
-    </form>-->
-    <br>
-    <form th:action="@{score/select.do}" th:method="get">
+    <form th:action="@{score/show/get.do}" th:method="get">
         <input th:type="submit" th:value="查看成绩" title="查看成绩"/>
     </form>
     <br>

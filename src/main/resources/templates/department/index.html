@@ -53,20 +53,50 @@
     </table>
 
     <br>
+    <form th:action="@{teacher/insert/set.do}" th:method="get">
+        <label>
+            <input th:type="submit" th:value="添加教师"/>
+        </label>
+    </form>
+    <br>
+    <form th:action="@{teacher/get.do}" th:method="get">
+        <label>
+            <input th:type="submit" th:value="管理教师"/>
+        </label>
+    </form>
+    <br>
+    <form th:action="@{student/insert/set.do}" th:method="get">
+        <label>
+            <input th:type="submit" th:value="添加学生"/>
+        </label>
+    </form>
+    <br>
+    <form th:action="@{student/get.do}" th:method="get">
+        <label>
+            <input th:type="submit" th:value="管理学生"/>
+        </label>
+    </form>
+    <br>
     <form th:action="@{course/professional/set.do}" th:method="get">
-        <input th:type="submit" th:value="开设专业课" title="开设专业课"/>
+        <label>
+            <input th:type="submit" th:value="开设专业课"/>
+        </label>
     </form>
     <br>
     <form th:action="@{course/public/set.do}" th:method="get">
-        <input th:type="submit" th:value="开设公共课" title="开设公共课"/>
+        <label>
+            <input th:type="submit" th:value="开设公共课"/>
+        </label>
     </form>
     <br>
-    <form th:action="@{course/elective/school/set.do}" th:method="get">
-        <input th:type="submit" th:value="开设全校性选修课" title="开设全校性选修课"/>
+    <form th:action="@{course/elective/set.do}" th:method="get">
+        <label>
+            <input th:type="submit" th:value="开设全校性选修课"/>
+        </label>
     </form>
     <br>
-    <form th:action="@{course/elective/sports/set.do}" th:method="get">
-        <input th:type="submit" th:value="开设体育选修课" title="开设体育选修课"/>
+    <form th:action="@{/}" th:method="get">
+        <input th:type="submit" th:value="登出" title="登出"/>
     </form>
 
 </div>

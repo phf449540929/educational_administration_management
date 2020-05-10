@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>设置教师基本信息</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div style="height: 600px; padding-left: 100px">
+    <form th:action="@{essential.do}" th:method="post">
+        <p th:text="请设置教师的基本信息"></p>
+        <label th:object="${session.teacher}">
+            教职工号：
+            <input th:type="text" th:name="teacherId" th:placeholder="教职工号" th:value="*{teacherId}">
+            <br>
+            密码：
+            <input th:type="text" th:name="teacherPassword" th:placeholder="密码" th:value="*{teacherPassword}">
+            <br>
+            姓名：
+            <input th:type="text" th:name="teacherName" th:placeholder="姓名" th:value="*{teacherName}">
+            <br>
+            性别：
+            <input th:type="radio" th:name="teacherGender" th:value="${session.MAN}" th:text="男"
+                   th:checked="*{teacherGender eq '男'}">
+            <input th:type="radio" th:name="teacherGender" th:value="${session.WOMAN}" th:text="女"
+                   th:checked="*{teacherGender eq '女'}">
+            <br>
+            职称：
+            <input th:type="radio" th:name="teacherRank" th:value="${session.ASSISTANT}" th:text="助教"
+                   th:checked="*{teacherRank.toString() eq 'ASSISTANT'}">
+            <input th:type="radio" th:name="teacherRank" th:value="${session.LECTURER}" th:text="讲师"
+                   th:checked="*{teacherRank.toString() eq 'LECTURER'}">
+            <input th:type="radio" th:name="teacherRank" th:value="${session.ASSOCIATE_PROFESSOR}" th:text="副教授"
+                   th:checked="*{teacherRank.toString() eq 'ASSOCIATE_PROFESSOR'}">
+            <input th:type="radio" th:name="teacherRank" th:value="${session.PROFESSOR}" th:text="教授"
+                   th:checked="*{teacherRank.toString() eq 'PROFESSOR'}">
+
+            <br><br>
+            <input th:type="submit" th:value="提交">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
+    </form>
+</div>
+
+</body>
+</html>

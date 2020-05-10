@@ -38,8 +38,7 @@
         <ul th:each="week, weekStat : ${weeks}" style="display: inline-block; width: 50px">
             <li>
                 <label>
-                    <input th:type="radio" th:name="beginWeek" th:value="*{week}" th:text="*{week.toString().substring(5)}"
-                           placeholder="教室">
+                    <input th:type="radio" th:name="beginWeek" th:value="*{week}" th:text="*{week.toString().substring(5)}">
                 </label>
             </li>
         </ul>
@@ -48,14 +47,16 @@
         <ul th:each="week, weekStat : ${weeks}" style="display: inline-block; width: 50px">
             <li>
                 <label>
-                    <input th:type="radio" th:name="endWeek" th:value="*{week}" th:text="*{week.toString().substring(5)}"
-                           placeholder="教室">
+                    <input th:type="radio" th:name="endWeek" th:value="*{week}" th:text="*{week.toString().substring(5)}">
                 </label>
             </li>
         </ul>
 
         <br><br>
-        <input type="submit">
+        <label>
+            <input th:type="submit" th:value="提交">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
     </form>
 </div>
 

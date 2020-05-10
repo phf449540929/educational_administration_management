@@ -100,7 +100,7 @@
         </tr>
         </tbody>
 
-        <tbody th:each="course, courseStat : ${schoolElectiveCourseList}">
+        <tbody th:each="course, courseStat : ${electiveCourseList}">
         <tr th:object="${course}">
             <td>
                 <input th:type="radio" th:name="courseId" th:value="*{courseId}" title="专业课">
@@ -125,14 +125,17 @@
                 <a th:case="${session.ASSOCIATE_PROFESSOR}" th:text="副教授"></a>
                 <a th:case="${session.PROFESSOR}" th:text="教授"></a>
             </td>
-            <td th:text="${schoolElectiveCourseStudentNumberMap.get(course.getCourseId())}"></td>
+            <td th:text="${electiveCourseStudentNumberMap.get(course.getCourseId())}"></td>
         </tr>
         </tbody>
 
     </table>
 
     <br>
-    <input type="submit">
+    <label>
+        <input th:type="submit" th:value="确认">
+        <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+    </label>
 </form>
 </body>
 </html>

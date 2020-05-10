@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>设置学生基本信息</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div style="height: 600px; padding-left: 100px">
+    <form th:action="@{essential.do}" th:method="post">
+        <p th:text="请设置教师的基本信息"></p>
+
+        <label>
+            学号：
+            <input th:type="text" th:name="studentId" th:placeholder="学号">
+            <br>
+            密码：
+            <input th:type="text" th:name="studentPassword" th:placeholder="密码">
+            <br>
+            姓名：
+            <input th:type="text" th:name="studentName" th:placeholder="姓名">
+            <br>
+            性别：
+            <input th:type="radio" th:name="studentGender" th:value="${session.MAN}" th:text="男">
+            <input th:type="radio" th:name="studentGender" th:value="${session.WOMAN}" th:text="女">
+            <br>
+            年级：
+            <input th:type="text" th:name="studentGrade" th:placeholder="年级">
+
+            <br><br>
+            <input th:type="submit" th:value="提交">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
+    </form>
+</div>
+
+</body>
+</html>

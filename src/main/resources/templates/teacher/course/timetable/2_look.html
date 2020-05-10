@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>教师个人课表</title>
+</head>
+<body>
+
+<p th:text="您的个人课表如下："></p>
+
+<style type="text/css">
+    table {
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    td {
+        border: solid 1px;
+    }
+</style>
+
+<table width="100%">
+    <caption th:text="教师个人课表"></caption>
+    <thead>
+    <tr>
+        <td th:text="时间" th:colspan="2"></td>
+        <td th:text="星期一"></td>
+        <td th:text="星期二"></td>
+        <td th:text="星期三"></td>
+        <td th:text="星期四"></td>
+        <td th:text="星期五"></td>
+        <td th:text="星期六"></td>
+        <td th:text="星期日"></td>
+    </tr>
+    <tr>
+        <td th:text="早晨" th:colspan="2"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td th:text="上午" th:rowspan="4"></td>
+        <td th:text="第1节"></td>
+        <th:block th:each="course, courseStat : ${courseListList.get(1)}">
+            <td th:if="${course != null}"
+                th:rowspan="${courseLengthArrayArray[1][courseStat.index]}"
+                th:object="${course}">
+                <a th:text="*{courseName}"></a>
+                <br>
+                <a th:switch="*{courseDay}">
+                    <a th:case="${session.DAY_1}" th:text="周一"></a>
+                    <a th:case="${session.DAY_2}" th:text="周二"></a>
+                    <a th:case="${session.DAY_3}" th:text="周三"></a>
+                    <a th:case="${session.DAY_4}" th:text="周四"></a>
+                    <a th:case="${session.DAY_5}" th:text="周五"></a>
+                    <a th:case="${session.DAY_6}" th:text="周六"></a>
+                    <a th:case="${session.DAY_7}" th:text="周日"></a>
+                </a>
+                <a th:text="*{'第' + courseBeginOrder.toString().split('_')[1] + ',' + courseEndOrder.toString().split('_')[1] + '节'}"></a>
+                <a th:text="*{'{第' + courseBeginWeek.toString().split('_')[1] + '-' + courseEndWeek.toString().split('_')[1] + '周}'}"></a>
+                <br>
+                <a th:text="${session.teacher.getTeacherName()}"></a>
+                <br>
+                <a th:text="*{courseClassroom.toString().split('_')[1]}"></a>
+            </td>
+            <td th:if="${course == null && courseStat.index != 0}"></td>
+        </th:block>
+    </tr>
+    <tr>
+        <td th:text="第2节"></td>
+        <th:block th:each="course, courseStat : ${courseListList.get(2)}">
+            <td th:if="${course != null && course != courseListList.get(1).get(courseStat.index)}"
+                th:rowspan="${courseLengthArrayArray[2][courseStat.index]}"
+                th:object="${course}">
+                <a th:text="*{courseName}"></a>
+                <br>
+                <a th:switch="*{courseDay}">
+                    <a th:case="${session.DAY_1}" th:text="周一"></a>
+                    <a th:case="${session.DAY_2}" th:text="周二"></a>
+                    <a th:case="${session.DAY_3}" th:text="周三"></a>
+                    <a th:case="${session.DAY_4}" th:text="周四"></a>
+                    <a th:case="${session.DAY_5}" th:text="周五"></a>
+                    <a th:case="${session.DAY_6}" th:text="周六"></a>
+                    <a th:case="${session.DAY_7}" th:text="周日"></a>
+                </a>
+                <a th:text="*{'第' + courseBeginOrder.toString().split('_')[1] + ',' + courseEndOrder.toString().split('_')[1] + '节'}"></a>
+                <a th:text="*{'{第' + courseBeginWeek.toString().split('_')[1] + '-' + courseEndWeek.toString().split('_')[1] + '周}'}"></a>
+                <br>
+                <a th:text="${session.teacher.getTeacherName()}"></a>
+                <br>
+                <a th:text="*{courseClassroom.toString().split('_')[1]}"></a>
+            </td>
+            <td th:if="${course == null && courseStat.index != 0}"></td>
+        </th:block>
+    </tr>
+    <tr>
+        <td th:text="第3节"></td>
+        <th:block th:each="course, courseStat : ${courseListList.get(3)}">
+            <td th:if="${course != null && course != courseListList.get(2).get(courseStat.index)}"
+                th:rowspan="${courseLengthArrayArray[3][courseStat.index]}"
+                th:object="${course}">
+                <a th:text="*{courseName}"></a>
+                <br>
+                <a th:switch="*{courseDay}">
+                    <a th:case="${session.DAY_1}" th:text="周一"></a>
+                    <a th:case="${session.DAY_2}" th:text="周二"></a>
+                    <a th:case="${session.DAY_3}" th:text="周三"></a>
+                    <a th:case="${session.DAY_4}" th:text="周四"></a>
+                    <a th:case="${session.DAY_5}" th:text="周五"></a>
+                    <a th:case="${session.DAY_6}" th:text="周六"></a>
+                    <a th:case="${session.DAY_7}" th:text="周日"></a>
+                </a>
+                <a th:text="*{'第' + courseBeginOrder.toString().split('_')[1] + ',' + courseEndOrder.toString().split('_')[1] + '节'}"></a>
+                <a th:text="*{'{第' + courseBeginWeek.toString().split('_')[1] + '-' + courseEndWeek.toString().split('_')[1] + '周}'}"></a>
+                <br>
+                <a th:text="${session.teacher.getTeacherName()}"></a>
+                <br>
+                <a th:text="*{courseClassroom.toString().split('_')[1]}"></a>
+            </td>
+            <td th:if="${course == null && courseStat.index != 0}"></td>
+        </th:block>
+    </tr>
+    <tr>
+        <td th:text="第4节"></td>
+        <th:block th:each="course, courseStat : ${courseListList.get(4)}">
+            <td th:if="${course != null && course != courseListList.get(3).get(courseStat.index)}"
+                th:rowspan="${courseLengthArrayArray[4][courseStat.index]}"
+                th:object="${course}">
+                <a th:text="*{courseName}"></a>
+                <br>
+                <a th:switch="*{courseDay}">
+                    <a th:case="${session.DAY_1}" th:text="周一"></a>
+                    <a th:case="${session.DAY_2}" th:text="周二"></a>
+                    <a th:case="${session.DAY_3}" th:text="周三"></a>
+                    <a th:case="${session.DAY_4}" th:text="周四"></a>
+                    <a th:case="${session.DAY_5}" th:text="周五"></a>
+                    <a th:case="${session.DAY_6}" th:text="周六"></a>
+                    <a th:case="${session.DAY_7}" th:text="周日"></a>
+                </a>
+                <a th:text="*{'第' + courseBeginOrder.toString().split('_')[1] + ',' + courseEndOrder.toString().split('_')[1] + '节'}"></a>
+                <a th:text="*{'{第' + courseBeginWeek.toString().split('_')[1] + '-' + courseEndWeek.toString().split('_')[1] + '周}'}"></a>
+                <br>
+                <a th:text="${session.teacher.getTeacherName()}"></a>
+                <br>
+                <a th:text="*{courseClassroom.toString().split('_')[1]}"></a>
+            </td>
+            <td th:if="${course == null && courseStat.index != 0}"></td>
+        </th:block>
+    </tr>
+
+    <tr>
+        <td th:text="下午" th:rowspan="4"></td>
+        <td th:text="第5节"></td>
+        <th:block th:each="course, courseStat : ${courseListList.get(5)}">
+            <td th:if="${course != null && course != courseListList.get(4).get(courseStat.index)}"
+                th:rowspan="${courseLengthArrayArray[5][courseStat.index]}"
+                th:object="${course}">
+                <a th:text="*{courseName}"></a>
+                <br>
+                <a th:switch="*{courseDay}">
+                    <a th:case="${session.DAY_1}" th:text="周一"></a>
+                    <a th:case="${session.DAY_2}" th:text="周二"></a>
+                    <a th:case="${session.DAY_3}" th:text="周三"></a>
+                    <a th:case="${session.DAY_4}" th:text="周四"></a>
+                    <a th:case="${session.DAY_5}" th:text="周五"></a>
+                    <a th:case="${session.DAY_6}" th:text="周六"></a>
+                    <a th:case="${session.DAY_7}" th:text="周日"></a>
+                </a>
+                <a th:text="*{'第' + courseBeginOrder.toString().split('_')[1] + ',' + courseEndOrder.toString().split('_')[1] + '节'}"></a>
+                <a th:text="*{'{第' + courseBeginWeek.toString().split('_')[1] + '-' + courseEndWeek.toString().split('_')[1] + '周}'}"></a>
+                <br>
+                <a th:text="${session.teacher.getTeacherName()}"></a>
+                <br>
+                <a th:text="*{courseClassroom.toString().split('_')[1]}"></a>
+            </td>
+            <td th:if="${course == null && courseStat.index != 0}"></td>
+        </th:block>
+    </tr>
+    <tr>
+        <td th:text="第6节"></td>
+        <th:block th:each="course, courseStat : ${courseListList.get(6)}">
+            <td th:if="${course != null && course != courseListList.get(5).get(courseStat.index)}"
+                th:rowspan="${courseLengthArrayArray[6][courseStat.index]}"
+                th:object="${course}">
+                <a th:text="*{courseName}"></a>
+                <br>
+                <a th:switch="*{courseDay}">
+                    <a th:case="${session.DAY_1}" th:text="周一"></a>
+                    <a th:case="${session.DAY_2}" th:text="周二"></a>
+                    <a th:case="${session.DAY_3}" th:text="周三"></a>
+                    <a th:case="${session.DAY_4}" th:text="周四"></a>
+                    <a th:case="${session.DAY_5}" th:text="周五"></a>
+                    <a th:case="${session.DAY_6}" th:text="周六"></a>
+                    <a th:case="${session.DAY_7}" th:text="周日"></a>
+                </a>
+                <a th:text="*{'第' + courseBeginOrder.toString().split('_')[1] + ',' + courseEndOrder.toString().split('_')[1] + '节'}"></a>
+                <a th:text="*{'{第' + courseBeginWeek.toString().split('_')[1] + '-' + courseEndWeek.toString().split('_')[1] + '周}'}"></a>
+                <br>
+                <a th:text="${session.teacher.getTeacherName()}"></a>
+                <br>
+                <a th:text="*{courseClassroom.toString().split('_')[1]}"></a>
+            </td>
+            <td th:if="${course == null && courseStat.index != 0}"></td>
+        </th:block>
+    </tr>
+    <tr>
+        <td th:text="第7节"></td>
+        <th:block th:each="course, courseStat : ${courseListList.get(7)}">
+            <td th:if="${course != null && course != courseListList.get(6).get(courseStat.index)}"
+                th:rowspan="${courseLengthArrayArray[7][courseStat.index]}"
+                th:object="${course}">
+                <a th:text="*{courseName}"></a>
+                <br>
+                <a th:switch="*{courseDay}">
+                    <a th:case="${session.DAY_1}" th:text="周一"></a>
+                    <a th:case="${session.DAY_2}" th:text="周二"></a>
+                    <a th:case="${session.DAY_3}" th:text="周三"></a>
+                    <a th:case="${session.DAY_4}" th:text="周四"></a>
+                    <a th:case="${session.DAY_5}" th:text="周五"></a>
+                    <a th:case="${session.DAY_6}" th:text="周六"></a>
+                    <a th:case="${session.DAY_7}" th:text="周日"></a>
+                </a>
+                <a th:text="*{'第' + courseBeginOrder.toString().split('_')[1] + ',' + courseEndOrder.toString().split('_')[1] + '节'}"></a>
+                <a th:text="*{'{第' + courseBeginWeek.toString().split('_')[1] + '-' + courseEndWeek.toString().split('_')[1] + '周}'}"></a>
+                <br>
+                <a th:text="${session.teacher.getTeacherName()}"></a>
+                <br>
+                <a th:text="*{courseClassroom.toString().split('_')[1]}"></a>
+            </td>
+            <td th:if="${course == null && courseStat.index != 0}"></td>
+        </th:block>
+    </tr>
+    <tr>
+        <td th:text="第8节"></td>
+        <th:block th:each="course, courseStat : ${courseListList.get(8)}">
+            <td th:if="${course != null && course != courseListList.get(7).get(courseStat.index)}"
+                th:rowspan="${courseLengthArrayArray[8][courseStat.index]}"
+                th:object="${course}">
+                <a th:text="*{courseName}"></a>
+                <br>
+                <a th:switch="*{courseDay}">
+                    <a th:case="${session.DAY_1}" th:text="周一"></a>
+                    <a th:case="${session.DAY_2}" th:text="周二"></a>
+                    <a th:case="${session.DAY_3}" th:text="周三"></a>
+                    <a th:case="${session.DAY_4}" th:text="周四"></a>
+                    <a th:case="${session.DAY_5}" th:text="周五"></a>
+                    <a th:case="${session.DAY_6}" th:text="周六"></a>
+                    <a th:case="${session.DAY_7}" th:text="周日"></a>
+                </a>
+                <a th:text="*{'第' + courseBeginOrder.toString().split('_')[1] + ',' + courseEndOrder.toString().split('_')[1] + '节'}"></a>
+                <a th:text="*{'{第' + courseBeginWeek.toString().split('_')[1] + '-' + courseEndWeek.toString().split('_')[1] + '周}'}"></a>
+                <br>
+                <a th:text="${session.teacher.getTeacherName()}"></a>
+                <br>
+                <a th:text="*{courseClassroom.toString().split('_')[1]}"></a>
+            </td>
+            <td th:if="${course == null && courseStat.index != 0}"></td>
+        </th:block>
+    </tr>
+
+    <tr>
+        <td th:text="晚上" th:rowspan="4"></td>
+        <td th:text="第9节"></td>
+        <th:block th:each="course, courseStat : ${courseListList.get(9)}">
+            <td th:if="${course != null && course != courseListList.get(8).get(courseStat.index)}"
+                th:rowspan="${courseLengthArrayArray[9][courseStat.index]}"
+                th:object="${course}">
+                <a th:text="*{courseName}"></a>
+                <br>
+                <a th:switch="*{courseDay}">
+                    <a th:case="${session.DAY_1}" th:text="周一"></a>
+                    <a th:case="${session.DAY_2}" th:text="周二"></a>
+                    <a th:case="${session.DAY_3}" th:text="周三"></a>
+                    <a th:case="${session.DAY_4}" th:text="周四"></a>
+                    <a th:case="${session.DAY_5}" th:text="周五"></a>
+                    <a th:case="${session.DAY_6}" th:text="周六"></a>
+                    <a th:case="${session.DAY_7}" th:text="周日"></a>
+                </a>
+                <a th:text="*{'第' + courseBeginOrder.toString().split('_')[1] + ',' + courseEndOrder.toString().split('_')[1] + '节'}"></a>
+                <a th:text="*{'{第' + courseBeginWeek.toString().split('_')[1] + '-' + courseEndWeek.toString().split('_')[1] + '周}'}"></a>
+                <br>
+                <a th:text="${session.teacher.getTeacherName()}"></a>
+                <br>
+                <a th:text="*{courseClassroom.toString().split('_')[1]}"></a>
+            </td>
+            <td th:if="${course == null && courseStat.index != 0}"></td>
+        </th:block>
+    </tr>
+    <tr>
+        <td th:text="第10节"></td>
+        <th:block th:each="course, courseStat : ${courseListList.get(10)}">
+            <td th:if="${course != null && course != courseListList.get(9).get(courseStat.index)}"
+                th:rowspan="${courseLengthArrayArray[10][courseStat.index]}"
+                th:object="${course}">
+                <a th:text="*{courseName}"></a>
+                <br>
+                <a th:switch="*{courseDay}">
+                    <a th:case="${session.DAY_1}" th:text="周一"></a>
+                    <a th:case="${session.DAY_2}" th:text="周二"></a>
+                    <a th:case="${session.DAY_3}" th:text="周三"></a>
+                    <a th:case="${session.DAY_4}" th:text="周四"></a>
+                    <a th:case="${session.DAY_5}" th:text="周五"></a>
+                    <a th:case="${session.DAY_6}" th:text="周六"></a>
+                    <a th:case="${session.DAY_7}" th:text="周日"></a>
+                </a>
+                <a th:text="*{'第' + courseBeginOrder.toString().split('_')[1] + ',' + courseEndOrder.toString().split('_')[1] + '节'}"></a>
+                <a th:text="*{'{第' + courseBeginWeek.toString().split('_')[1] + '-' + courseEndWeek.toString().split('_')[1] + '周}'}"></a>
+                <br>
+                <a th:text="${session.teacher.getTeacherName()}"></a>
+                <br>
+                <a th:text="*{courseClassroom.toString().split('_')[1]}"></a>
+            </td>
+            <td th:if="${course == null && courseStat.index != 0}"></td>
+        </th:block>
+    </tr>
+    <tr>
+        <td th:text="第11节"></td>
+        <th:block th:each="course, courseStat : ${courseListList.get(11)}">
+            <td th:if="${course != null && course != courseListList.get(10).get(courseStat.index)}"
+                th:rowspan="${courseLengthArrayArray[11][courseStat.index]}"
+                th:object="${course}">
+                <a th:text="*{courseName}"></a>
+                <br>
+                <a th:switch="*{courseDay}">
+                    <a th:case="${session.DAY_1}" th:text="周一"></a>
+                    <a th:case="${session.DAY_2}" th:text="周二"></a>
+                    <a th:case="${session.DAY_3}" th:text="周三"></a>
+                    <a th:case="${session.DAY_4}" th:text="周四"></a>
+                    <a th:case="${session.DAY_5}" th:text="周五"></a>
+                    <a th:case="${session.DAY_6}" th:text="周六"></a>
+                    <a th:case="${session.DAY_7}" th:text="周日"></a>
+                </a>
+                <a th:text="*{'第' + courseBeginOrder.toString().split('_')[1] + ',' + courseEndOrder.toString().split('_')[1] + '节'}"></a>
+                <a th:text="*{'{第' + courseBeginWeek.toString().split('_')[1] + '-' + courseEndWeek.toString().split('_')[1] + '周}'}"></a>
+                <br>
+                <a th:text="${session.teacher.getTeacherName()}"></a>
+                <br>
+                <a th:text="*{courseClassroom.toString().split('_')[1]}"></a>
+            </td>
+            <td th:if="${course == null && courseStat.index != 0}"></td>
+        </th:block>
+    </tr>
+    <tr>
+        <td th:text="第12节"></td>
+        <th:block th:each="course, courseStat : ${courseListList.get(12)}">
+            <td th:if="${course != null && course != courseListList.get(11).get(courseStat.index)}"
+                th:rowspan="${courseLengthArrayArray[12][courseStat.index]}"
+                th:object="${course}">
+                <a th:text="*{courseName}"></a>
+                <br>
+                <a th:switch="*{courseDay}">
+                    <a th:case="${session.DAY_1}" th:text="周一"></a>
+                    <a th:case="${session.DAY_2}" th:text="周二"></a>
+                    <a th:case="${session.DAY_3}" th:text="周三"></a>
+                    <a th:case="${session.DAY_4}" th:text="周四"></a>
+                    <a th:case="${session.DAY_5}" th:text="周五"></a>
+                    <a th:case="${session.DAY_6}" th:text="周六"></a>
+                    <a th:case="${session.DAY_7}" th:text="周日"></a>
+                </a>
+                <a th:text="*{'第' + courseBeginOrder.toString().split('_')[1] + ',' + courseEndOrder.toString().split('_')[1] + '节'}"></a>
+                <a th:text="*{'{第' + courseBeginWeek.toString().split('_')[1] + '-' + courseEndWeek.toString().split('_')[1] + '周}'}"></a>
+                <br>
+                <a th:text="${session.teacher.getTeacherName()}"></a>
+                <br>
+                <a th:text="*{courseClassroom.toString().split('_')[1]}"></a>
+            </td>
+            <td th:if="${course == null && courseStat.index != 0}"></td>
+        </th:block>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+<label>
+    <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+</label>
+
+</body>
+</html>

@@ -2,10 +2,10 @@ package com.cdu.edu.student;
 
 import com.cdu.edu.SetSessionUtil;
 import com.cdu.edu.course.*;
-import com.cdu.edu.course.elective.school.SchoolElectiveCourse;
-import com.cdu.edu.course.elective.school.SchoolElectiveCourseService;
-import com.cdu.edu.course.elective.school.student.SchoolElectiveCourseStudent;
-import com.cdu.edu.course.elective.school.student.SchoolElectiveCourseStudentService;
+import com.cdu.edu.course.elective.ElectiveCourse;
+import com.cdu.edu.course.elective.ElectiveCourseService;
+import com.cdu.edu.course.elective.student.ElectiveCourseStudent;
+import com.cdu.edu.course.elective.student.ElectiveCourseStudentService;
 import com.cdu.edu.course.professional.ProfessionalCourse;
 import com.cdu.edu.course.professional.ProfessionalCourseService;
 import com.cdu.edu.course.professional.classes.ProfessionalCourseClass;
@@ -17,6 +17,7 @@ import com.cdu.edu.course.publics.classes.PublicCourseClassService;
 import com.cdu.edu.department.DepartmentService;
 import com.cdu.edu.index.Identity;
 import com.cdu.edu.index.LoginForm;
+import com.cdu.edu.score.Score;
 import com.cdu.edu.score.ScoreService;
 import com.cdu.edu.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,10 +54,10 @@ public class StudentController {
     DepartmentService departmentService;
 
     @Autowired
-    SchoolElectiveCourseService schoolElectiveCourseService;
+    ElectiveCourseService electiveCourseService;
 
     @Autowired
-    SchoolElectiveCourseStudentService schoolElectiveCourseStudentService;
+    ElectiveCourseStudentService electiveCourseStudentService;
 
     @Autowired
     ProfessionalCourseService professionalCourseService;
@@ -81,6 +82,9 @@ public class StudentController {
 
     @Autowired
     SetSessionUtil setSessionUtil;
+
+    @Autowired
+    GetCourseUtil getCourseUtil;
 
     /**
      * description: the IndexController's login by student would come here
@@ -136,70 +140,6 @@ public class StudentController {
     }
 
     /**
-     * description: 学生查看自己的课表
-     *
-     * @param model   SpringMVC的Model
-     * @param session JavaWeb的Session
-     * @return java.lang.String 模版路径
-     */
-    @RequestMapping("course/look.do")
-    public String look(Model model, HttpSession session) {
-        AbstractCourse[][] courseArrayArray = new AbstractCourse[13][8];
-        int[][] courseLengthArrayArray = new int[13][8];
-        Student student = (Student) session.getAttribute("student");
-
-        List<SchoolElectiveCourseStudent> schoolElectiveCourseStudentList =
-                schoolElectiveCourseStudentService.getCourse(student);
-        List<SchoolElectiveCourse> schoolElectiveCourseList =
-                schoolElectiveCourseService.getSchoolElectiveCourse(schoolElectiveCourseStudentList);
-        SchoolElectiveCourse[][] schoolElectiveCourseArrayArray =
-                setCourseUtil.getSchoolElectiveCourse(schoolElectiveCourseList);
-        setCourseUtil.setSchoolElectiveCourse(courseArrayArray, schoolElectiveCourseArrayArray);
-        int[][] schoolElectiveCourseLengthArrayArray =
-                setCourseLengthUtil.getSchoolElectiveCourseLength(schoolElectiveCourseArrayArray);
-        setCourseLengthUtil.setSchoolElectiveCourseLength(courseLengthArrayArray,
-                schoolElectiveCourseLengthArrayArray);
-
-        List<ProfessionalCourseClass> professionalCourseClassList =
-                professionalCourseClassService.getCourse(student);
-        List<ProfessionalCourse> professionalCourseList =
-                professionalCourseService.getProfessionalCourse(professionalCourseClassList);
-        ProfessionalCourse[][] professionalCourseArrayArray =
-                setCourseUtil.getProfessionalCourse(professionalCourseList);
-        setCourseUtil.setProfessionalCourse(courseArrayArray, professionalCourseArrayArray);
-        int[][] professionalCourseLengthArrayArray =
-                setCourseLengthUtil.getProfessionalCourseLength(professionalCourseArrayArray);
-        setCourseLengthUtil.setProfessionalCourseLength(courseLengthArrayArray,
-                professionalCourseLengthArrayArray);
-
-        List<PublicCourseClass> publicCourseClassList = publicCourseClassService.getCourse(student);
-        List<PublicCourse> publicCourseList =
-                publicCourseService.getPublicCourse(publicCourseClassList);
-        PublicCourse[][] publicCourseArrayArray = setCourseUtil.getPublicCourse(publicCourseList);
-        setCourseUtil.setPublicCourse(courseArrayArray, publicCourseArrayArray);
-        int[][] publicCourseLengthArrayArray =
-                setCourseLengthUtil.getPublicCourseLength(publicCourseArrayArray);
-        setCourseLengthUtil.setPublicCourseLength(courseLengthArrayArray,
-                publicCourseLengthArrayArray);
-
-        List<List<AbstractCourse>> courseListList = new ArrayList<>();
-        for (AbstractCourse[] courseArray : courseArrayArray) {
-            List<AbstractCourse> courseList = new ArrayList<>(Arrays.asList(courseArray));
-            courseListList.add(courseList);
-        }
-
-        model.addAttribute("courseListList", courseListList);
-        model.addAttribute("courseLengthArrayArray", courseLengthArrayArray);
-
-        model.addAttribute("teacherNameMap",
-                teacherService.getTeacherName(professionalCourseArrayArray,
-                        schoolElectiveCourseArrayArray));
-
-        setSessionUtil.setCourseDay(session);
-        return "student/course/look";
-    }
-
-    /**
      * description: get all the professional course, and return to
      * teacher/course/professional/1_select.html
      *
@@ -208,23 +148,22 @@ public class StudentController {
      */
     @RequestMapping("course/elective/set.do")
     public String school(Model model, HttpSession session) {
-        List<SchoolElectiveCourse> schoolElectiveCourseList =
-                schoolElectiveCourseService.getSchoolElectiveCourse();
-        model.addAttribute("courseList", schoolElectiveCourseList);
+        List<ElectiveCourse> electiveCourseList = electiveCourseService.getElectiveCourse();
+        model.addAttribute("courseList", electiveCourseList);
 
         session.setAttribute("departmentNameMap",
-                departmentService.getDepartmentName(schoolElectiveCourseList.toArray(),
-                        CourseType.SCHOOL_ELECTIVE_COURSE));
+                departmentService.getDepartmentName(electiveCourseList.toArray(),
+                        CourseType.ELECTIVE_COURSE));
 
         session.setAttribute("teacherNameMap",
-                teacherService.getTeacherName(schoolElectiveCourseList.toArray(),
-                        CourseType.SCHOOL_ELECTIVE_COURSE));
+                teacherService.getTeacherName(electiveCourseList.toArray(),
+                        CourseType.ELECTIVE_COURSE));
         session.setAttribute("teacherRankMap",
-                teacherService.getTeacherRank(schoolElectiveCourseList.toArray(),
-                        CourseType.SCHOOL_ELECTIVE_COURSE));
+                teacherService.getTeacherRank(electiveCourseList.toArray(),
+                        CourseType.ELECTIVE_COURSE));
 
-        Map<Integer, List<SchoolElectiveCourseStudent>> courseStudentMap =
-                schoolElectiveCourseStudentService.getCourseStudent(schoolElectiveCourseList);
+        Map<Integer, List<ElectiveCourseStudent>> courseStudentMap =
+                electiveCourseStudentService.getCourseStudent(electiveCourseList);
         session.setAttribute("courseStudentMap", courseStudentMap);
 
         setSessionUtil.setTeacherRank(session);
@@ -243,9 +182,12 @@ public class StudentController {
      */
     @RequestMapping("course/elective/select.do")
     public String selectSchool(int[] courseIdArray, Model model, HttpSession session) {
+        if (courseIdArray == null || courseIdArray.length == 0) {
+            model.addAttribute("information", "您并未选择课程");
+            return "error";
+        }
         session.setAttribute("courseIdArray", courseIdArray);
-        model.addAttribute("courseList",
-                schoolElectiveCourseService.getSchoolElectiveCourse(courseIdArray));
+        model.addAttribute("courseList", electiveCourseService.getElectiveCourse(courseIdArray));
         return "student/course/elective/2_ensure";
     }
 
@@ -258,29 +200,130 @@ public class StudentController {
      */
     @RequestMapping("course/elective/ensure.do")
     public String saveSchool(HttpSession session, Model model) {
-        schoolElectiveCourseStudentService.setCourseStudent((int[]) session.getAttribute(
-                "courseIdArray"), (Student) session.getAttribute("student"));
+        electiveCourseStudentService.setCourseStudent((int[]) session.getAttribute("courseIdArray"
+        ), (Student) session.getAttribute("student"));
         model.addAttribute("information", "您已完成选修课选课");
         return "student/return";
     }
 
-    @RequestMapping("score/select.do")
-    public String toScore(HttpSession session) {
+    /**
+     * description: get all the professional course, and return to
+     * teacher/course/professional/1_select.html
+     *
+     * @param session the Model of the SpringMVC
+     * @return java.lang.String
+     */
+    @RequestMapping("course/timetable/get.do")
+    public String toTimetable(HttpSession session, Model model) {
         setSessionUtil.setCourseSemester(session);
-        return "student/score/1_select";
+        return "student/course/timetable/1_select";
     }
 
-    @RequestMapping("score/look.do")
-    public String lookScore(HttpSession session, Model model, String year,
-                            CourseSemester semester) {
+    /**
+     * description: 学生查看自己的课表
+     *
+     * @param model   SpringMVC的Model
+     * @param session JavaWeb的Session
+     * @return java.lang.String 模版路径
+     */
+    @RequestMapping("course/timetable/select.do")
+    public String lookTimetable(String year, CourseSemester semester, Model model,
+                                HttpSession session) {
+        if (year == null || "".equals(year)) {
+            model.addAttribute("information", "您并未输入查看课表的年份");
+            return "error";
+        } else if (!year.matches("[0-9]*")) {
+            model.addAttribute("information", "您输入的查看课表的年份只能为数字");
+            return "error";
+        } else if (semester == null) {
+            model.addAttribute("information", "您并未选择查看课表的学期");
+            return "error";
+        }
+
+        AbstractCourse[][] courseArrayArray = new AbstractCourse[13][8];
+        int[][] courseLengthArrayArray = new int[13][8];
+        Student student = (Student) session.getAttribute("student");
+
+        List<ElectiveCourseStudent> electiveCourseStudentList =
+                electiveCourseStudentService.getCourse(student);
+        List<ElectiveCourse> electiveCourseList =
+                electiveCourseService.getElectiveCourse(electiveCourseStudentList);
+        electiveCourseList.removeIf(course -> !course.getCourseYear().equals(year) || course.getCourseSemester() != semester);
+        ElectiveCourse[][] electiveCourseArrayArray =
+                setCourseUtil.getElectiveCourse(electiveCourseList);
+        setCourseUtil.setElectiveCourse(courseArrayArray, electiveCourseArrayArray);
+        int[][] schoolElectiveCourseLengthArrayArray =
+                setCourseLengthUtil.getElectiveCourseLength(electiveCourseArrayArray);
+        setCourseLengthUtil.setElectiveCourseLength(courseLengthArrayArray,
+                schoolElectiveCourseLengthArrayArray);
+
+        List<ProfessionalCourseClass> professionalCourseClassList =
+                professionalCourseClassService.getCourse(student);
+        List<ProfessionalCourse> professionalCourseList =
+                professionalCourseService.getProfessionalCourse(professionalCourseClassList);
+        professionalCourseList.removeIf(course -> !course.getCourseYear().equals(year) || course.getCourseSemester() != semester);
+        ProfessionalCourse[][] professionalCourseArrayArray =
+                setCourseUtil.getProfessionalCourse(professionalCourseList);
+        setCourseUtil.setProfessionalCourse(courseArrayArray, professionalCourseArrayArray);
+        int[][] professionalCourseLengthArrayArray =
+                setCourseLengthUtil.getProfessionalCourseLength(professionalCourseArrayArray);
+        setCourseLengthUtil.setProfessionalCourseLength(courseLengthArrayArray,
+                professionalCourseLengthArrayArray);
+
+        List<PublicCourseClass> publicCourseClassList = publicCourseClassService.getCourse(student);
+        List<PublicCourse> publicCourseList =
+                publicCourseService.getPublicCourse(publicCourseClassList);
+        publicCourseList.removeIf(course -> !course.getCourseYear().equals(year) || course.getCourseSemester() != semester);
+        PublicCourse[][] publicCourseArrayArray = setCourseUtil.getPublicCourse(publicCourseList);
+        setCourseUtil.setPublicCourse(courseArrayArray, publicCourseArrayArray);
+        int[][] publicCourseLengthArrayArray =
+                setCourseLengthUtil.getPublicCourseLength(publicCourseArrayArray);
+        setCourseLengthUtil.setPublicCourseLength(courseLengthArrayArray,
+                publicCourseLengthArrayArray);
+
+        List<List<AbstractCourse>> courseListList = new ArrayList<>();
+        for (AbstractCourse[] courseArray : courseArrayArray) {
+            List<AbstractCourse> courseList = new ArrayList<>(Arrays.asList(courseArray));
+            courseListList.add(courseList);
+        }
+
+        model.addAttribute("courseListList", courseListList);
+        model.addAttribute("courseLengthArrayArray", courseLengthArrayArray);
+        model.addAttribute("teacherNameMap",
+                teacherService.getTeacherName(electiveCourseArrayArray,
+                        professionalCourseArrayArray, publicCourseArrayArray));
+        setSessionUtil.setCourseDay(session);
+        return "student/course/timetable/2_look";
+    }
+
+    @RequestMapping("score/show/get.do")
+    public String toScore(HttpSession session) {
+        setSessionUtil.setCourseSemester(session);
+        return "student/score/show/1_select";
+    }
+
+    @RequestMapping("score/show/select.do")
+    public String lookScore(String year, CourseSemester semester, Model model,
+                            HttpSession session) {
+        if (year == null || "".equals(year)) {
+            model.addAttribute("information", "您并未输入查看成绩的年份");
+            return "error";
+        } else if (!year.matches("[0-9]*")) {
+            model.addAttribute("information", "您输入的查看成绩的年份只能为数字");
+            return "error";
+        } else if (semester == null) {
+            model.addAttribute("information", "您并未选择查看成绩的学期");
+            return "error";
+        }
+
         session.setAttribute("year", year);
         session.setAttribute("semester", semester);
         Student student = (Student) session.getAttribute("student");
 
-        List<SchoolElectiveCourseStudent> schoolElectiveCourseStudentList =
-                schoolElectiveCourseStudentService.getCourse(student);
-        List<SchoolElectiveCourse> schoolElectiveCourseList =
-                schoolElectiveCourseService.getSchoolElectiveCourse(schoolElectiveCourseStudentList);
+        List<ElectiveCourseStudent> electiveCourseStudentList =
+                electiveCourseStudentService.getCourse(student);
+        List<ElectiveCourse> electiveCourseList =
+                electiveCourseService.getElectiveCourse(electiveCourseStudentList);
 
         List<ProfessionalCourseClass> professionalCourseClassList =
                 professionalCourseClassService.getCourse(student);
@@ -292,15 +335,18 @@ public class StudentController {
                 publicCourseService.getPublicCourse(publicCourseClassList);
 
         List<AbstractCourse> courseList =
-                new ArrayList<>(schoolElectiveCourseList.size() + professionalCourseList.size() + publicCourseList.size());
-        courseList.addAll(schoolElectiveCourseList);
+                new ArrayList<>(electiveCourseList.size() + professionalCourseList.size() + publicCourseList.size());
+        courseList.addAll(electiveCourseList);
         courseList.addAll(professionalCourseList);
         courseList.addAll(publicCourseList);
         courseList.removeIf(course -> !course.getCourseYear().equals(year) || course.getCourseSemester() != semester);
 
+        List<Score> scoreList = scoreService.getScore(student, courseList);
+        courseList = getCourseUtil.getCourse(courseList, scoreList);
+
         model.addAttribute("courseList", courseList);
-        model.addAttribute("scoreList", scoreService.getScore(student, courseList));
-        return "student/score/2_look";
+        model.addAttribute("scoreList", scoreList);
+        return "student/score/show/2_look";
     }
 
 

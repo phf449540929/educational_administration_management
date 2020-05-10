@@ -1,12 +1,12 @@
 package com.cdu.edu.index;
 
 /**
- * description: the login's form
+ * description: 登录表单的JavaBean
  *
  * @author haifeng
  * @version 1.0
  * @date 2018/9/29 0029 下午 17:29
- * @since jdk
+ * @since jdk 10.0.1
  */
 public class LoginForm {
 

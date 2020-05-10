@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>确认添加教师信息</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div th:object="${session.teacher}" style="height: 600px">
+
+    <p th:text="请确认您设置的教师信息："></p>
+
+    <style type="text/css">
+        table{
+            border-collapse: collapse;
+            text-align: center;
+        }
+        td{
+            border: solid 1px;
+        }
+    </style>
+
+    <table>
+        <caption th:text="教师信息"></caption>
+        <tr>
+            <td th:text="教职工号"></td>
+            <td th:text="*{teacherId}"></td>
+        </tr>
+        <tr>
+            <td th:text="密码"></td>
+            <td th:text="*{teacherPassword}"></td>
+        </tr>
+        <tr>
+            <td th:text="名字"></td>
+            <td th:text="*{teacherName}"></td>
+        </tr>
+        <tr>
+            <td th:text="性别"></td>
+            <td th:text="*{teacherGender}"></td>
+        </tr>
+        <tr>
+            <td th:text="部门"></td>
+            <td th:text="${session.teacherDepartmentName}"></td>
+        </tr>
+        <tr>
+            <td th:text="职称"></td>
+            <td th:if="${session.teacher.teacherRank eq session.ASSISTANT}" th:text="助教"></td>
+            <td th:if="${session.teacher.teacherRank eq session.LECTURER}" th:text="讲师"></td>
+            <td th:if="${session.teacher.teacherRank eq session.ASSOCIATE_PROFESSOR}" th:text="副教授"></td>
+            <td th:if="${session.teacher.teacherRank eq session.PROFESSOR}" th:text="教授"></td>
+        </tr>
+    </table>
+
+    <br>
+    <form th:action="@{ensure.do}" th:method="post">
+        <label>
+            <input th:type="submit" th:value="确认">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
+    </form>
+</div>
+
+</body>
+</html>

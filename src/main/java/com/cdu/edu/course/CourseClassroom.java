@@ -1,7 +1,7 @@
 package com.cdu.edu.course;
 
 /**
- * description:
+ * description: 上课教室枚举
  *
  * @author haifeng
  * @version 1.0
@@ -11,7 +11,7 @@ package com.cdu.edu.course;
 public enum CourseClassroom {
 
     /**
-     * the 10 academic building and the B comprehensive building
+     * 十教的所有教室
      */
     CLASSROOM_10201, CLASSROOM_10202, CLASSROOM_10203, CLASSROOM_10204, CLASSROOM_10205,
     CLASSROOM_10206, CLASSROOM_10207, CLASSROOM_10208, CLASSROOM_10209, CLASSROOM_10210,

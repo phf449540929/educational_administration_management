@@ -1,14 +1,15 @@
 package com.cdu.edu.teacher;
 
 import com.cdu.edu.course.CourseType;
+import com.cdu.edu.course.elective.ElectiveCourse;
 import com.cdu.edu.course.professional.ProfessionalCourse;
 import com.cdu.edu.course.publics.PublicCourse;
-import com.cdu.edu.course.elective.school.SchoolElectiveCourse;
-import com.cdu.edu.course.elective.sports.SportsElectiveCourse;
+import com.cdu.edu.course.sports.SportsElectiveCourse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,11 +35,40 @@ public class TeacherService {
      */
     public Teacher login(String teacherId, String teacherPassword) {
         Teacher teacher = teacherRepository.findByTeacherId(teacherId);
-        return teacher == null || teacherPassword.equals(teacher.getTeacherPassword()) ? teacher : null;
+        return teacher == null || teacherPassword.equals(teacher.getTeacherPassword()) ? teacher
+                : null;
     }
 
+    /**
+     * description: 用于部门设置教师
+     *
+     * @param teacher
+     */
     public void insert(Teacher teacher) {
         teacherRepository.save(teacher);
+    }
+
+    public void delete(Teacher teacher){
+        teacherRepository.delete(teacher);
+    }
+
+    /**
+     * description: 用于部门获取教师列表
+     *
+     * @return java.util.List<E> 数据库中的全部教师
+     */
+    public List<Teacher> getTeacher() {
+        return teacherRepository.findAll();
+    }
+
+    /**
+     *
+     *
+     * @param teacherId
+     * @return
+     */
+    public Teacher getTeacher(String teacherId) {
+        return teacherRepository.findByTeacherId(teacherId);
     }
 
     public Map<String, String> getTeacherName(Object[] courseArray, CourseType courseType) {
@@ -48,7 +78,8 @@ public class TeacherService {
                 for (Object course : courseArray) {
                     String teacherId = ((ProfessionalCourse) course).getTeacherId();
                     if (teacherId != null) {
-                        teacherNameMap.put(teacherId, teacherRepository.findByTeacherId(teacherId).getTeacherName());
+                        teacherNameMap.put(teacherId,
+                                teacherRepository.findByTeacherId(teacherId).getTeacherName());
                     }
                 }
                 break;
@@ -56,23 +87,26 @@ public class TeacherService {
                 for (Object course : courseArray) {
                     String teacherId = ((PublicCourse) course).getTeacherId();
                     if (teacherId != null) {
-                        teacherNameMap.put(teacherId, teacherRepository.findByTeacherId(teacherId).getTeacherName());
+                        teacherNameMap.put(teacherId,
+                                teacherRepository.findByTeacherId(teacherId).getTeacherName());
                     }
                 }
                 break;
-            case SCHOOL_ELECTIVE_COURSE:
+            case ELECTIVE_COURSE:
                 for (Object course : courseArray) {
-                    String teacherId = ((SchoolElectiveCourse) course).getTeacherId();
+                    String teacherId = ((ElectiveCourse) course).getTeacherId();
                     if (teacherId != null) {
-                        teacherNameMap.put(teacherId, teacherRepository.findByTeacherId(teacherId).getTeacherName());
+                        teacherNameMap.put(teacherId,
+                                teacherRepository.findByTeacherId(teacherId).getTeacherName());
                     }
                 }
                 break;
-            case SPORTS_ELECTIVE_COURSE:
+            case SPORTS_COURSE:
                 for (Object course : courseArray) {
                     String teacherId = ((SportsElectiveCourse) course).getTeacherId();
                     if (teacherId != null) {
-                        teacherNameMap.put(teacherId, teacherRepository.findByTeacherId(teacherId).getTeacherName());
+                        teacherNameMap.put(teacherId,
+                                teacherRepository.findByTeacherId(teacherId).getTeacherName());
                     }
                 }
                 break;
@@ -82,22 +116,34 @@ public class TeacherService {
         return teacherNameMap;
     }
 
-    public Map<String, String> getTeacherName(ProfessionalCourse[][] professionalCourseArrayArray,
-                                              SchoolElectiveCourse[][] schoolElectiveCoursesArrayArray) {
+    public Map<String, String> getTeacherName(ElectiveCourse[][] electiveCoursesArrayArray,
+                                              ProfessionalCourse[][] professionalCourseArrayArray
+            , PublicCourse[][] publicCourseArrayArray) {
         Map<String, String> teacherNameMap = new HashMap<>(8 * 13);
+        for (ElectiveCourse[] courses : electiveCoursesArrayArray) {
+            for (ElectiveCourse course : courses) {
+                String teacherId = course == null ? null : course.getTeacherId();
+                if (teacherId != null) {
+                    teacherNameMap.put(teacherId,
+                            teacherRepository.findByTeacherId(teacherId).getTeacherName());
+                }
+            }
+        }
         for (ProfessionalCourse[] courses : professionalCourseArrayArray) {
             for (ProfessionalCourse course : courses) {
                 String teacherId = course == null ? null : course.getTeacherId();
                 if (teacherId != null) {
-                    teacherNameMap.put(teacherId, teacherRepository.findByTeacherId(teacherId).getTeacherName());
+                    teacherNameMap.put(teacherId,
+                            teacherRepository.findByTeacherId(teacherId).getTeacherName());
                 }
             }
         }
-        for (SchoolElectiveCourse[] courses : schoolElectiveCoursesArrayArray) {
-            for (SchoolElectiveCourse course : courses) {
+        for (PublicCourse[] courses : publicCourseArrayArray) {
+            for (PublicCourse course : courses) {
                 String teacherId = course == null ? null : course.getTeacherId();
                 if (teacherId != null) {
-                    teacherNameMap.put(teacherId, teacherRepository.findByTeacherId(teacherId).getTeacherName());
+                    teacherNameMap.put(teacherId,
+                            teacherRepository.findByTeacherId(teacherId).getTeacherName());
                 }
             }
         }
@@ -111,7 +157,8 @@ public class TeacherService {
                 for (Object course : courseArray) {
                     String teacherId = ((ProfessionalCourse) course).getTeacherId();
                     if (teacherId != null) {
-                        teacherRankMap.put(teacherId, teacherRepository.findByTeacherId(teacherId).getTeacherRank());
+                        teacherRankMap.put(teacherId,
+                                teacherRepository.findByTeacherId(teacherId).getTeacherRank());
                     }
                 }
                 break;
@@ -119,23 +166,26 @@ public class TeacherService {
                 for (Object course : courseArray) {
                     String teacherId = ((PublicCourse) course).getTeacherId();
                     if (teacherId != null) {
-                        teacherRankMap.put(teacherId, teacherRepository.findByTeacherId(teacherId).getTeacherRank());
+                        teacherRankMap.put(teacherId,
+                                teacherRepository.findByTeacherId(teacherId).getTeacherRank());
                     }
                 }
                 break;
-            case SCHOOL_ELECTIVE_COURSE:
+            case ELECTIVE_COURSE:
                 for (Object course : courseArray) {
-                    String teacherId = ((SchoolElectiveCourse) course).getTeacherId();
+                    String teacherId = ((ElectiveCourse) course).getTeacherId();
                     if (teacherId != null) {
-                        teacherRankMap.put(teacherId, teacherRepository.findByTeacherId(teacherId).getTeacherRank());
+                        teacherRankMap.put(teacherId,
+                                teacherRepository.findByTeacherId(teacherId).getTeacherRank());
                     }
                 }
                 break;
-            case SPORTS_ELECTIVE_COURSE:
+            case SPORTS_COURSE:
                 for (Object course : courseArray) {
                     String teacherId = ((SportsElectiveCourse) course).getTeacherId();
                     if (teacherId != null) {
-                        teacherRankMap.put(teacherId, teacherRepository.findByTeacherId(teacherId).getTeacherRank());
+                        teacherRankMap.put(teacherId,
+                                teacherRepository.findByTeacherId(teacherId).getTeacherRank());
                     }
                 }
                 break;

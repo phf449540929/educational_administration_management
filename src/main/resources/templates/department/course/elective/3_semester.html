@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>选择开课学期</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div style="height: 600px">
+    <p th:text="您已设置了该全校性选修课的开课年份为："></p>
+    <p th:text="${session.year} + '年'"></p>
+
+    <form th:action="@{semester.do}" th:method="post">
+        <p th:text="请选择该全校性选修课的开课学期"></p>
+        <ul style="display: inline-block">
+            <li>
+                <label>
+                    <input th:type="radio" th:name="semester" th:value="${session.LAST_HALF_SEMESTER}" th:text="上半学期">
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input th:type="radio" th:name="semester" th:value="${session.NEXT_HALF_SEMESTER}" th:text="下半学期">
+                </label>
+            </li>
+        </ul>
+
+        <br><br>
+        <label>
+            <input th:type="submit" th:value="提交">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
+    </form>
+</div>
+
+</body>
+</html>

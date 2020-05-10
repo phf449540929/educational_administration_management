@@ -52,7 +52,7 @@ public class ProfessionalCourseService {
         for (int courseId : courseIdArray) {
             courseIdList.add(courseId);
         }
-        return professionalCourseRepository.findByCourseId(courseIdList);
+        return professionalCourseRepository.findByCourseIdIn(courseIdList);
     }
 
     public List<ProfessionalCourse> getProfessionalCourse(List<ProfessionalCourseClass> professionalCourseClassList) {
@@ -60,7 +60,7 @@ public class ProfessionalCourseService {
         for (ProfessionalCourseClass professionalCourseClass : professionalCourseClassList) {
             courseIdList.add(professionalCourseClass.getCourseId());
         }
-        return professionalCourseRepository.findByCourseId(courseIdList);
+        return professionalCourseRepository.findByCourseIdIn(courseIdList);
     }
 
     public List<ProfessionalCourse> getProfessionalCourse(Teacher teacher) {

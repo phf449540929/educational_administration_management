@@ -5,12 +5,12 @@ import com.cdu.edu.teacher.TeacherRank;
 import javax.persistence.*;
 
 /**
- * description:
+ * description: 抽象课程类
  *
  * @author haifeng
  * @version 1.0
  * @date 2018/10/12 0012 上午 11:31
- * @since jdk
+ * @since jdk 10.0.1
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

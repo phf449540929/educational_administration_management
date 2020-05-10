@@ -38,8 +38,9 @@ public class ProfessionalCourseClassService {
         Map<Integer, List<ProfessionalCourseClass>> professionalCourseClassMap =
                 new HashMap<>(professionalCourseList.size());
         for (ProfessionalCourse professionalCourse : professionalCourseList) {
-            professionalCourseClassMap.put(professionalCourse.getCourseId(),
-                    professionalCourseClassRepository.findByCourseId(professionalCourse.getCourseId()));
+            int courseId = professionalCourse.getCourseId();
+            professionalCourseClassMap.put(courseId,
+                    professionalCourseClassRepository.findByCourseId(courseId));
         }
         return professionalCourseClassMap;
     }

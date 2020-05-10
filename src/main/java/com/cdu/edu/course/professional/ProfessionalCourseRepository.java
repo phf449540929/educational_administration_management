@@ -24,7 +24,7 @@ public interface ProfessionalCourseRepository extends JpaRepository<Professional
      * @param courseIdList get the list of professional course by the array of course' id
      * @return java.util.List
      */
-    public List<ProfessionalCourse> findByCourseId(List<Integer> courseIdList);
+    public List<ProfessionalCourse> findByCourseIdIn(List<Integer> courseIdList);
 
     public List<ProfessionalCourse> findByTeacherId(String teacherId);
 

@@ -1,0 +1,105 @@
+@startuml
+
+class department {
+    department_id: varchar
+    department_name: varchar
+    department_password: varchar
+}
+
+teacher "n" --* "1" department
+class teacher {
+    teacher_id: varchar
+    teacher_department: varchar
+    teacher_gender: varchar
+    teacher_name: varchar
+    teacher_password: varchar
+    teacher_rank: int
+}
+
+student "n" --* "1" department
+class student {
+    student_id: varchar
+    student_academy: varchar
+    student_class: varchar
+    student_gender: varchar
+    student_grade: varchar
+    student_major: varchar
+    student_name: varchar
+    student_password: varchar
+}
+
+abstract_course "n" --* "1" department
+abstract_course "n" --* "1" teacher
+class abstract_course {
+    course_id: int
+    academy_id: varchar
+    course_begin_order: int
+    course_begin_week: int
+    course_classroom: int
+    course_day: int
+    course_end_order: int
+    course_end_week: int
+    course_name: varchar
+    course_semester: int
+    course_type: int
+    course_year: varchar
+    teacher_id: varchar
+    teacher_need_rank: int
+    experimental_ratio: float
+    roll_ratio: float
+    usual: float
+}
+
+professional_course "1" --|> "1" abstract_course
+class professional_course {
+    course_id: int
+}
+
+public_course "1" --|> "1" abstract_course
+class public_course {
+    course_id: int
+}
+
+elective_course "1" --|> "1" abstract_course
+class elective_course {
+    course_id: int
+    course_size: int
+}
+
+professional_course_class "n" --* "1" professional_course
+professional_course_class "n" --* "1" student
+class professional_course_class {
+    id: int
+    course_id: int
+    student_class: varchar
+}
+
+public_course_class "n" --* "1" public_course
+public_course_class "n" --* "1" student
+class public_course_class {
+    id: int
+    course_id: int
+    student_class: varchar
+}
+
+elective_course_student "n" --* "1" elective_course
+elective_course_student "n" --* "1" student
+class elective_course_student {
+    id: int
+    course_id: int
+    student_id: varchar
+}
+
+score "n" --* "1" abstract_course
+score "n" --* "1" student
+class score {
+    score_id: int
+    course_id: int
+    experimental_score: double
+    roll_score: double
+    student_id: varchar
+    total_score: double
+    usual_score: double
+}
+
+@enduml

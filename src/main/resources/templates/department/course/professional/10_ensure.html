@@ -91,15 +91,6 @@
             <td th:text="课程教室"></td>
             <td th:text="${session.classroom.toString().substring(10)}"></td>
         </tr>
-        <!--<tr>
-            <td th:text="教师所需职称"></td>
-            <td>
-                <a th:if="${session.rank eq session.ASSISTANT}" th:text="助教"></a>
-                <a th:if="${session.rank eq session.LECTURER}" th:text="讲师"></a>
-                <a th:if="${session.rank eq session.ASSOCIATE_PROFESSOR}" th:text="副教授"></a>
-                <a th:if="${session.rank eq session.PROFESSOR}" th:text="教授"></a>
-            </td>
-        </tr>-->
         <tr>
             <td th:text="上课班级数"></td>
             <td th:text="${classNumber}">
@@ -122,7 +113,10 @@
 
     <br>
     <form th:action="@{ensure.do}" th:method="post">
-        <input th:type="submit" th:value="确认" title="确认">
+        <label>
+            <input th:type="submit" th:value="确认">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
     </form>
 </div>
 

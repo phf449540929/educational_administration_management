@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>设置教师所属部门</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div style="height: 600px; padding-left: 100px">
+
+    <form th:action="@{department.do}" th:method="post">
+        <p th:text="请修改教师的所属部门"></p>
+
+        <ul th:each="department, departmentStat : ${departmentList}">
+            <li>
+                <label th:object="${department}">
+                    <input th:type="radio" th:name="departmentId" th:value="*{departmentId}"
+                           th:text="*{departmentName}"
+                           th:checked="${department.departmentId eq session.teacher.teacherDepartment}">
+                </label>
+            </li>
+        </ul>
+
+        <br><br>
+        <label>
+            <input th:type="submit" th:value="提交">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
+    </form>
+
+</div>
+
+</body>
+</html>

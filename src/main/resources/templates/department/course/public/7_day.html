@@ -30,29 +30,46 @@
         <p th:text="请您选择该公共课的上课日期"></p>
         <ul>
             <li>
-                <input th:type="radio" th:name="day" th:value="*{session.DAY_1}" th:text="星期一" title="星期一">
+                <label>
+                    <input th:type="radio" th:name="day" th:value="*{session.DAY_1}" th:text="星期一">
+                </label>
             </li>
             <li>
-                <input th:type="radio" th:name="day" th:value="*{session.DAY_2}" th:text="星期二" title="星期二">
+                <label>
+                    <input th:type="radio" th:name="day" th:value="*{session.DAY_2}" th:text="星期二">
+                </label>
             </li>
             <li>
-                <input th:type="radio" th:name="day" th:value="*{session.DAY_3}" th:text="星期三" title="星期三">
+                <label>
+                    <input th:type="radio" th:name="day" th:value="*{session.DAY_3}" th:text="星期三">
+                </label>
             </li>
             <li>
-                <input th:type="radio" th:name="day" th:value="*{session.DAY_4}" th:text="星期四" title="星期四">
+                <label>
+                    <input th:type="radio" th:name="day" th:value="*{session.DAY_4}" th:text="星期四">
+                </label>
             </li>
             <li>
-                <input th:type="radio" th:name="day" th:value="*{session.DAY_5}" th:text="星期五" title="星期五">
+                <label>
+                    <input th:type="radio" th:name="day" th:value="*{session.DAY_5}" th:text="星期五">
+                </label>
             </li>
             <li>
-                <input th:type="radio" th:name="day" th:value="*{session.DAY_6}" th:text="星期六" title="星期六">
+                <label>
+                    <input th:type="radio" th:name="day" th:value="*{session.DAY_6}" th:text="星期六">
+                </label>
             </li>
             <li>
-                <input th:type="radio" th:name="day" th:value="*{session.DAY_7}" th:text="星期日" title="星期日">
+                <label>
+                    <input th:type="radio" th:name="day" th:value="*{session.DAY_7}" th:text="星期日">
+                </label>
             </li>
         </ul>
 
-        <input th:type="submit" title="提交">
+        <label>
+            <input th:type="submit" th:value="提交">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
     </form>
 </div>
 

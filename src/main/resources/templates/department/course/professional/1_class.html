@@ -28,13 +28,16 @@
         <ul th:each="class, classStat : ${classSet}" style="display: inline-block">
             <li style="width: 150px">
                 <label>
-                    <input th:type="checkbox" th:name="classArray" th:value="*{class}" th:text="*{class}" placeholder="班级">
+                    <input th:type="checkbox" th:name="classArray" th:value="*{class}" th:text="*{class}">
                 </label>
             </li>
         </ul>
 
         <br><br>
-        <input type="submit">
+        <label>
+            <input th:type="submit" th:value="提交">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
     </form>
 </div>
 

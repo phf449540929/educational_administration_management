@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * description:
@@ -27,28 +26,6 @@ public class ScoreService {
         scoreRepository.saveAll(scoreList);
     }
 
-    public List<Score> getScore(AbstractCourse course, List<Student> studentList,
-                                Queue<String> rollScoreQueue, Queue<String> usualScoreQueue,
-                                Queue<String> experimentalScoreQueue) {
-        List<Score> scoreList = new ArrayList<>(studentList.size());
-        int courseId = course.getCourseId();
-
-        for (Student student : studentList) {
-            String studentId = student.getStudentId();
-            assert !rollScoreQueue.isEmpty();
-            double rollScore = Double.parseDouble(rollScoreQueue.poll());
-            assert !usualScoreQueue.isEmpty();
-            double usualScore = Double.parseDouble(usualScoreQueue.poll());
-            assert !experimentalScoreQueue.isEmpty();
-            double experimentalScore = Double.parseDouble(experimentalScoreQueue.poll());
-            double totalScore =
-                    course.getRollRatio() * rollScore + course.getUsualRatio() * usualScore + course.getExperimentalRatio() * experimentalScore;
-            scoreList.add(new Score(courseId, studentId, rollScore, usualScore, experimentalScore
-                    , totalScore));
-        }
-        return scoreList;
-    }
-
     public List<Score> getScore(AbstractCourse course, List<Student> studentList) {
         List<Score> scoreList = new ArrayList<>();
         for (Student student : studentList) {
@@ -61,8 +38,11 @@ public class ScoreService {
     public List<Score> getScore(Student student, List<AbstractCourse> courseList) {
         List<Score> scoreList = new ArrayList<>(courseList.size());
         for (AbstractCourse course : courseList) {
-            scoreList.add(scoreRepository.findByCourseIdAndStudentId(course.getCourseId(),
-                    student.getStudentId()));
+            Score score = scoreRepository.findByCourseIdAndStudentId(course.getCourseId(),
+                    student.getStudentId());
+            if(score != null){
+                scoreList.add(score);
+            }
         }
         return scoreList;
     }

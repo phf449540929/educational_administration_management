@@ -9,7 +9,7 @@
 <body>
 
 <form th:action="@{select.do}" th:method="post">
-    <p th:text="请选择您要选择的专业课"></p>
+    <p th:text="请选择您要选择的选修课"></p>
 
     <style type="text/css">
         table {
@@ -23,7 +23,7 @@
     </style>
 
     <table>
-        <caption th:text="全校性选修课课信息"></caption>
+        <caption th:text="选修课信息"></caption>
 
         <thead>
         <tr>
@@ -103,7 +103,10 @@
     </table>
 
     <br>
-    <input type="submit">
+    <label>
+        <input th:type="submit" th:value="提交">
+        <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+    </label>
 </form>
 
 </body>

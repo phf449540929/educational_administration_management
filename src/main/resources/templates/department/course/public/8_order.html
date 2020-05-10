@@ -42,7 +42,7 @@
             <li>
                 <label>
                     <input th:type="radio" th:name="beginOrder" th:value="*{order}"
-                           th:text="*{order.toString().split('_')[1]}" placeholder="时间">
+                           th:text="*{order.toString().split('_')[1]}">
                 </label>
             </li>
         </ul>
@@ -52,13 +52,16 @@
             <li>
                 <label>
                     <input th:type="radio" th:name="endOrder" th:value="*{order}"
-                           th:text="*{order.toString().split('_')[1]}" placeholder="时间">
+                           th:text="*{order.toString().split('_')[1]}">
                 </label>
             </li>
         </ul>
 
         <br><br>
-        <input type="submit">
+        <label>
+            <input th:type="submit" th:value="提交">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
     </form>
 </div>
 

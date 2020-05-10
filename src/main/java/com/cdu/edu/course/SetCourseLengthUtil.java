@@ -1,12 +1,12 @@
 package com.cdu.edu.course;
 
-import com.cdu.edu.course.elective.school.SchoolElectiveCourse;
+import com.cdu.edu.course.elective.ElectiveCourse;
 import com.cdu.edu.course.professional.ProfessionalCourse;
 import com.cdu.edu.course.publics.PublicCourse;
 import org.springframework.stereotype.Component;
 
 /**
- * description:
+ * description: 生成与课表相对应的课程上课时长二维数组的工具类
  *
  * @author haifeng
  * @version 1.1
@@ -16,31 +16,48 @@ import org.springframework.stereotype.Component;
 @Component
 public class SetCourseLengthUtil {
 
-    public int[][] getSchoolElectiveCourseLength(SchoolElectiveCourse[][] schoolElectiveCourseArrayArray) {
-        int[][] schoolElectiveCourseLengthArray = new int[13][8];
-        for (int i = 1; i < schoolElectiveCourseArrayArray.length; i++) {
-            for (int j = 1; j < schoolElectiveCourseArrayArray[i].length; j++) {
-                if (schoolElectiveCourseArrayArray[i][j] != null) {
-                    schoolElectiveCourseLengthArray[i][j] =
-                            Integer.parseInt(schoolElectiveCourseArrayArray[i][j].getCourseEndOrder().toString().split("_")[1]) - Integer.parseInt(schoolElectiveCourseArrayArray[i][j].getCourseBeginOrder().toString().split("_")[1]) + 1;
+    /**
+     * description: 生成选修课上课时长二维数组
+     *
+     * @param electiveCourseArrayArray 选修课二维数组
+     * @return java.lang.Integer[][] 选修课上课时长二维数组
+     */
+    public int[][] getElectiveCourseLength(ElectiveCourse[][] electiveCourseArrayArray) {
+        int[][] electiveCourseLengthArray = new int[13][8];
+        for (int i = 1; i < electiveCourseArrayArray.length; i++) {
+            for (int j = 1; j < electiveCourseArrayArray[i].length; j++) {
+                if (electiveCourseArrayArray[i][j] != null) {
+                    electiveCourseLengthArray[i][j] =
+                            Integer.parseInt(electiveCourseArrayArray[i][j].getCourseEndOrder().toString().split("_")[1]) - Integer.parseInt(electiveCourseArrayArray[i][j].getCourseBeginOrder().toString().split("_")[1]) + 1;
                 }
             }
         }
-        return schoolElectiveCourseLengthArray;
+        return electiveCourseLengthArray;
     }
 
-    public void setSchoolElectiveCourseLength(int[][] courseLengthArrayArray,
-                                                     int[][] schoolElectiveCourseLengthArrayArray) {
-        for (int i = 0; i < schoolElectiveCourseLengthArrayArray.length; i++) {
-            for (int j = 0; j < schoolElectiveCourseLengthArrayArray[i].length; j++) {
-                if (schoolElectiveCourseLengthArrayArray[i][j] != 0) {
-                    courseLengthArrayArray[i][j] =
-                            schoolElectiveCourseLengthArrayArray[i][j];
+    /**
+     * description: 将选修课上课时长二维数组填入综合三种课程的上课时长二维数组中
+     *
+     * @param courseLengthArrayArray         综合三种课程的上课时长二维数组
+     * @param electiveCourseLengthArrayArray 选修课上课时长二维数组
+     */
+    public void setElectiveCourseLength(int[][] courseLengthArrayArray,
+                                        int[][] electiveCourseLengthArrayArray) {
+        for (int i = 0; i < electiveCourseLengthArrayArray.length; i++) {
+            for (int j = 0; j < electiveCourseLengthArrayArray[i].length; j++) {
+                if (electiveCourseLengthArrayArray[i][j] != 0) {
+                    courseLengthArrayArray[i][j] = electiveCourseLengthArrayArray[i][j];
                 }
             }
         }
     }
 
+    /**
+     * description: 生成专业课上课时长二维数组
+     *
+     * @param professionalCourseArrayArray 专业课二维数组
+     * @return java.lang.Integer[][] 专业课上课时长二维数组
+     */
     public int[][] getProfessionalCourseLength(ProfessionalCourse[][] professionalCourseArrayArray) {
         int[][] professionalCourseLengthArrayArray = new int[13][8];
         for (int i = 1; i < professionalCourseArrayArray.length; i++) {
@@ -54,18 +71,29 @@ public class SetCourseLengthUtil {
         return professionalCourseLengthArrayArray;
     }
 
+    /**
+     * 将专业课上课时长二维数组填入综合三种课程的上课时长二维数组中
+     *
+     * @param courseLengthArrayArray             综合三种课程的上课时长二维数组
+     * @param professionalCourseLengthArrayArray 专业课上课时长二维数组
+     */
     public void setProfessionalCourseLength(int[][] courseLengthArrayArray,
-                                                   int[][] professionalCourseLengthArrayArray) {
+                                            int[][] professionalCourseLengthArrayArray) {
         for (int i = 0; i < professionalCourseLengthArrayArray.length; i++) {
             for (int j = 0; j < professionalCourseLengthArrayArray[i].length; j++) {
                 if (professionalCourseLengthArrayArray[i][j] != 0) {
-                    courseLengthArrayArray[i][j] =
-                            professionalCourseLengthArrayArray[i][j];
+                    courseLengthArrayArray[i][j] = professionalCourseLengthArrayArray[i][j];
                 }
             }
         }
     }
 
+    /**
+     * 将公共课上课时长二维数组填入综合三种课程的上课时长二维数组中
+     *
+     * @param publicCourseArrayArray 公共课二维数组
+     * @return java.lang.Integer[][] 公共课上课时长二维数组
+     */
     public int[][] getPublicCourseLength(PublicCourse[][] publicCourseArrayArray) {
         int[][] publicCourseLengthArrayArray = new int[13][8];
         for (int i = 1; i < publicCourseArrayArray.length; i++) {
@@ -79,15 +107,21 @@ public class SetCourseLengthUtil {
         return publicCourseLengthArrayArray;
     }
 
+    /**
+     * 将公共课上课时长二维数组填入综合三种课程的上课时长二维数组中
+     *
+     * @param courseLengthArrayArray       综合三种课程的上课时长二维数组
+     * @param publicCourseLengthArrayArray 公共课上课时长二维数组
+     */
     public void setPublicCourseLength(int[][] courseLengthArrayArray,
-                                             int[][] publicCourseLengthArrayArray) {
+                                      int[][] publicCourseLengthArrayArray) {
         for (int i = 0; i < publicCourseLengthArrayArray.length; i++) {
             for (int j = 0; j < publicCourseLengthArrayArray[i].length; j++) {
                 if (publicCourseLengthArrayArray[i][j] != 0) {
-                    courseLengthArrayArray[i][j] =
-                            publicCourseLengthArrayArray[i][j];
+                    courseLengthArrayArray[i][j] = publicCourseLengthArrayArray[i][j];
                 }
             }
         }
     }
+
 }

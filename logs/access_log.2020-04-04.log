@@ -1,0 +1,10 @@
+0:0:0:0:0:0:0:1 - - [04/Apr/2020:18:11:45 +0800] "GET / HTTP/1.1" 200 2267
+0:0:0:0:0:0:0:1 - - [04/Apr/2020:18:11:46 +0800] "GET /verifyUtil.do HTTP/1.1" 200 698
+0:0:0:0:0:0:0:1 - - [04/Apr/2020:18:11:55 +0800] "POST /login.do HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [04/Apr/2020:18:11:56 +0800] "GET /department/login.do?username=000000000001&password=123456 HTTP/1.1" 200 2345
+0:0:0:0:0:0:0:1 - - [04/Apr/2020:18:11:57 +0800] "GET /department/course/professional/set.do HTTP/1.1" 200 11986
+0:0:0:0:0:0:0:1 - - [04/Apr/2020:19:32:42 +0800] "GET / HTTP/1.1" 200 2267
+0:0:0:0:0:0:0:1 - - [04/Apr/2020:19:32:42 +0800] "GET /verifyUtil.do HTTP/1.1" 200 578
+0:0:0:0:0:0:0:1 - - [04/Apr/2020:19:32:53 +0800] "POST /login.do HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [04/Apr/2020:19:32:54 +0800] "GET /department/login.do?username=000000000001&password=123456 HTTP/1.1" 200 2345
+0:0:0:0:0:0:0:1 - - [04/Apr/2020:19:32:59 +0800] "GET /department/course/professional/set.do HTTP/1.1" 200 11986

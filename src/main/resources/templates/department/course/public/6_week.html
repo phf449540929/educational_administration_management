@@ -26,12 +26,6 @@
     <p th:text="您已设置了该公共课的名字为："></p>
     <p th:text="${session.name}"></p>
 
-    <!--<p th:text="您已选择了该公共课的任课老师职称至少为：" ></p>-->
-    <!--<p th:if="${session.rank eq session.ASSISTANT}" th:text="助教"></p>-->
-    <!--<p th:if="${session.rank eq session.LECTURER}" th:text="讲师"></p>-->
-    <!--<p th:if="${session.rank eq session.ASSOCIATE_PROFESSOR}" th:text="副教授"></p>-->
-    <!--<p th:if="${session.rank eq session.PROFESSOR}" th:text="教授"></p>-->
-
     <form th:action="@{week.do}" th:method="post" style="width: 1000px">
         <p th:text="请您选择该公共课的上课周期"></p>
 
@@ -40,7 +34,7 @@
             <li>
                 <label>
                     <input th:type="radio" th:name="beginWeek" th:value="*{week}"
-                           th:text="*{week.toString().substring(5)}" placeholder="教室">
+                           th:text="*{week.toString().substring(5)}">
                 </label>
             </li>
         </ul>
@@ -50,13 +44,16 @@
             <li>
                 <label>
                     <input th:type="radio" th:name="endWeek" th:value="*{week}"
-                           th:text="*{week.toString().substring(5)}" placeholder="教室">
+                           th:text="*{week.toString().substring(5)}">
                 </label>
             </li>
         </ul>
 
         <br><br>
-        <input type="submit">
+        <label>
+            <input th:type="submit" th:value="提交">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
     </form>
 </div>
 

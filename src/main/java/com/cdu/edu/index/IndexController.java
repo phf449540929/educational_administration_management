@@ -1,5 +1,6 @@
 package com.cdu.edu.index;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,21 +14,24 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * description: the controller to the index
+ * description: 登录控制器
  *
  * @author haifeng
  * @version 1.0
  * @date 2018/9/29 0029 下午 17:24
- * @since jdk
+ * @since jdk 10.0.1
  */
 @Controller
 public class IndexController {
 
+    @Autowired
+    VerifyUtil verifyUtil;
+
     /**
-     * description: find the index.html
+     * description: 转向index页面
      *
-     * @param model the model of SpringMVC
-     * @return java.lang.String
+     * @param model Model组件
+     * @return java.lang.String 模版路径
      */
     @RequestMapping("")
     public String index(Model model) {
@@ -38,23 +42,23 @@ public class IndexController {
     }
 
     /**
-     * description: to check the verification code and direct the login to other controller
+     * description: 登录动作
      *
-     * @param loginForm          the loginForm from the form
-     * @param redirectAttributes the redirectAttributes of SpringMVC
-     * @param session            the session to get the verification
-     * @return java.lang.String
+     * @param loginForm          登录表单的JavaBean
+     * @param redirectAttributes 重定向组件
+     * @param session            Session组件
+     * @return java.lang.String  模版路径
      */
     @RequestMapping("login.do")
-    public String login(LoginForm loginForm, HttpSession session, RedirectAttributes redirectAttributes) {
-
+    public String login(LoginForm loginForm, HttpSession session,
+                        RedirectAttributes redirectAttributes) {
         String verification = loginForm.getVerification();
         if ("".equals(verification)) {
             loginForm.setMessage("验证码不能为空");
             return "index";
         }
         boolean isVerify = verification.equals(session.getAttribute("verification"));
-        if(!isVerify){
+        if (!isVerify) {
             loginForm.setMessage("验证码错误");
             return "index";
         }
@@ -70,31 +74,31 @@ public class IndexController {
             case STUDENT:
                 return "redirect:student/login.do";
             case VISITOR:
-                return "redirect:index";
+                return "redirect:";
             default:
-                return "redirect:index";
+                return "error";
         }
     }
 
     /**
-     * description: get the verify util
+     * description: 获取验证码
      *
-     * @param response get the servlet's response to write the image
-     * @param session  get the servlet's session to add into the verification
+     * @param response Response组件
+     * @param session  Session组件
      */
     @RequestMapping(value = "verifyUtil.do")
     public void getVerifyUtil(HttpServletResponse response, HttpSession session) {
         //利用图片工具生成图片
         //第一个参数是生成的验证码，第二个参数是生成的图片
-        Object[] objects = VerifyUtil.createImage();
+        Object[] objects = verifyUtil.createImage();
         //将验证码存入Session
         session.setAttribute("verification", objects[0]);
         //将图片输出给浏览器
         BufferedImage image = (BufferedImage) objects[1];
         response.setContentType("image/png");
         try {
-            OutputStream os = response.getOutputStream();
-            ImageIO.write(image, "png", os);
+            OutputStream outputStream = response.getOutputStream();
+            ImageIO.write(image, "png", outputStream);
         } catch (IOException ioe) {
             System.out.println("something wrong");
         }

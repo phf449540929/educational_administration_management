@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>设置学生所属信息</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div style="height: 600px; padding-left: 100px">
+
+    <form th:action="@{organization.do}" th:method="post">
+        <p th:text="请设置该学生的所属信息"></p>
+
+        学院：
+        <ul th:each="department, departmentStat : ${departmentList}">
+            <li>
+                <label th:object="${department}">
+                    <input th:type="radio" th:name="departmentId" th:value="*{departmentId}"
+                           th:text="*{departmentName}">
+                </label>
+            </li>
+        </ul>
+
+        <label>
+            专业：
+            <input th:type="text" th:name="studentMajor" th:placeholder="专业">
+            <br>
+            班级：
+            <input th:type="text" th:name="studentClass" th:placeholder="班级">
+        </label>
+
+        <br><br>
+        <label>
+            <input th:type="submit" th:value="提交">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
+    </form>
+
+</div>
+
+</body>
+</html>

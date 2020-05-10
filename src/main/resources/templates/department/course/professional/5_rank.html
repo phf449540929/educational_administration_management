@@ -30,21 +30,31 @@
         <p th:text="请您选择该专业课的任课老师所需职称"></p>
         <ul>
             <li>
-                <input th:type="radio" th:name="rank" th:value="*{session.ASSISTANT}" th:text="助教" title="职称">
+                <label>
+                    <input th:type="radio" th:name="rank" th:value="*{session.ASSISTANT}" th:text="助教">
+                </label>
             </li>
             <li>
-                <input th:type="radio" th:name="rank" th:value="*{session.LECTURER}" th:text="讲师" title="职称">
+                <label>
+                    <input th:type="radio" th:name="rank" th:value="*{session.LECTURER}" th:text="讲师">
+                </label>
             </li>
             <li>
-                <input th:type="radio" th:name="rank" th:value="*{session.ASSOCIATE_PROFESSOR}" th:text="副教授"
-                       title="职称">
+                <label>
+                    <input th:type="radio" th:name="rank" th:value="*{session.ASSOCIATE_PROFESSOR}" th:text="副教授">
+                </label>
             </li>
             <li>
-                <input th:type="radio" th:name="rank" th:value="*{session.PROFESSOR}" th:text="教授" title="职称">
+                <label>
+                    <input th:type="radio" th:name="rank" th:value="*{session.PROFESSOR}" th:text="教授">
+                </label>
             </li>
         </ul>
 
-        <input th:type="submit" title="提交">
+        <label>
+            <input th:type="submit" th:value="提交">
+            <input th:type="button" th:value="返回" th:onclick="history.back(-1);">
+        </label>
     </form>
 </div>
 
